@@ -77,16 +77,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tk_e06.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+### ADD THIS ###
+DATABASE_URL = 'postgres://<insert your URI code>'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(),
 }
+
+DATABASES['default'] = dj_database_url.config()
+DATABASES['default'] = dj_database_url.config(default=DATABASE_URL)
 
 # If Using Heroku Environemnt, then Use Database Setting on Heroku
 if PRODUCTION:
