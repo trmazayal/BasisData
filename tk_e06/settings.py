@@ -78,7 +78,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'tk_e06.wsgi.application'
 
 ### ADD THIS ###
-DATABASE_URL = 'postgres://<insert your URI code>'
+DATABASE_URL = 'postgres://cxswxnhywnrstt:632ce50836077526c8913843768cb6520277d46bfdd6e98d2b19151bba288ff4@ec2-52-54-212-232.compute-1.amazonaws.com:5432/d6a0okm8dcarlp'
 
 DATABASES = {
     'default': dj_database_url.config(),
