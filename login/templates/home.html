@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Home
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container-fluid header">
+        <div class="container">
+            <h1 class="welcome">Welcome to <b>HI DAY E06</b>,</h1>
+            <h1>{{nama_akun}}</h1>
+            <a href="{% url 'profil' %}" class="mybutton butwhite" role="button">My Profile</a>
+        </div>
+    </div>
+{% endblock content %}

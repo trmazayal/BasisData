@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+    <title>HI DAY | Login
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/back_anim.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+</head>
+<body class="login_back area" style="height: 100vh;">
+  <div class="divider"></div>
+  <div class="container-fluid">
+    <div class="row mainRow align-items-center justify-content-center">
+      <div class="login">      
+        <h2>Welcome to <b>HI DAY!</b></h2>
+        <img src="{% static 'images/favicon.png' %}" width="200px" style="margin: 50px 0px;" alt="">
+        <form  method="POST" action="/Home/">
+          {% csrf_token %}
+            <div class="loginForm">{{formlogin.as_table}}</div>
+            <input type="submit" value="Login" name="tombol" class="mybutton butwhite">
+        </form>
+        
+        <p class="text--center" style="color: white;">Don't have an account? <a href="/Register/" style="color: #132238;">Sign up</a>
+        <p class="text--center" style="color: white; background-color: grey;border-radius: 7px;">{{message}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+</body>
+</html>
