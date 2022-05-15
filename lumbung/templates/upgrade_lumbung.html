@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Upgrade Lumbung
+{% endblock title %}
+
+
+{% block content %}
+<script>
+    function validateForm() {
+        var x = document.forms["myForm"]["jumlah"].value;
+        if (x == "" || x == null) {
+            alert("Koin anda tidak cukup, silahkan cari Koin terlebih dahulu");
+            return false;
+        }
+    }
+</script>
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Upgrade Lumbung</h1>
+    <div class="container-fluid">
+        <div class="col-md-8 offset-md-2 mt-5">
+            <form class="was-validated" name="myForm" onsubmit="return validateForm()" action="/lumbung/transaksi-upgrade-lumbung/">
+                <div class="mb-3">
+                    <label for="validationTextarea">Level Lumbung</label>
+                    <input type="" placeholder="3 => 4" readonly>
+                  </div>
+                <div class="mb-3">
+                    <label for="validationTextarea">Kapasitas Lumbung</label>
+                    <input type="" placeholder="150 => 200">
+                  </div>
+                <div class="mb-3">
+                  <label for="validationTextarea">Biaya Upgrade</label>
+                  <input type="" placeholder="200" readonly>
+                </div>
+                <input type="submit" value="Upgrade" name="tombol" class="mybutton">
+              </form>  
+        </div>
+    </div>
+{% endblock content %}
