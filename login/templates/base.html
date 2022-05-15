@@ -11,9 +11,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    {% block meta %}
+    {% endblock meta %}
 </head>
 <body>
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light py-3">
+  <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand" href="/Home">
         <img src="{% static 'images/favicon.png' %}" height="32px" alt="" class="d-inline-block align-top">
@@ -29,7 +31,7 @@
                   Lumbung
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Lihat Isi Lumbung</a>
+                  <a class="dropdown-item" href="{% url 'authentication:lihatIsiLumbung' %}">Lihat Isi Lumbung</a>
                   {% if request.session.role == "Pengguna" %}
                   <a class="dropdown-item" href="{% url 'upgrade-lumbung' %}">Upgrade Lumbung</a>
                   {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
@@ -98,15 +100,15 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   {% if request.session.role == "Admin" %}
-                  <a class="dropdown-item" href="#">Buat Produk</a>                 
-                  <a class="dropdown-item" href="#">List Produk</a>
-                  <a class="dropdown-item" href="#">Buat Produksi</a>        
-                  <a class="dropdown-item" href="#">List Produksi</a>         
+                  <a class="dropdown-item" href="{% url 'produk:createProduk' %}">Buat Produk</a>                 
+                  <a class="dropdown-item" href="{% url 'produk:produk' %}">List Produk</a>
+                  <a class="dropdown-item" href="{% url 'produk:createProduksi' %}">Buat Produksi</a>        
+                  <a class="dropdown-item" href="{% url 'produk:produksi' %}">List Produksi</a>         
                   {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
                   {% endif %}
                   {% if request.session.role == "Pengguna" %}                            
-                  <a class="dropdown-item" href="#">List Produk</a>     
-                  <a class="dropdown-item" href="#">List Produksi</a>  
+                  <a class="dropdown-item" href="{% url 'produk:produk' %}">List Produk</a>     
+                  <a class="dropdown-item" href="{% url 'produk:produksi' %}">List Produksi</a>  
                   {% endif %}
                 </div>
               </li>
@@ -135,8 +137,7 @@
                   <a class="dropdown-item" href="{% url 'produksi-tanaman' %}">Produksi Tanaman</a>    
                   <a class="dropdown-item" href="{% url 'histori-produksi-tanaman' %}">List Histori Produksi Tanaman</a>
                   <a class="dropdown-item" href="#">Produksi Produk Makanan</a>   
-                  <a class="dropdown-item" href="#">List Histori Produksi Makanan</a> 
-                  {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
+                  <a class="dropdown-item" href="{% url 'produk:historiProduksiMakanan' %}">List Histori Produksi Makanan</a> 
                 </div>
               </li>
               {% endif %}
@@ -157,7 +158,7 @@
               </li>
       <div class="row justify-items-end">
         <div style="width: 20px;"></div>
-        <a href="{% url 'logout' %}" class="mybutton">Log Out</a>
+        <a href="{% url 'authentication:logout' %}" class="mybutton">Log Out</a>
       </div>
     </div>
   </nav>

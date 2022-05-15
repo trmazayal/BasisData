@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Ranga&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitter&family=Noto+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitter&family=Gochi+Hand&family=Noto+Sans&family=Palanquin+Dark&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cookie&display=swap');
+
+html,body{
+    background:#212129;
+    height:100%;
+    width: 100%;
+}
+
+.jumbotron{
+    background-color: rgb(224, 203, 172);
+    margin-top: 30px;
+}
+
+.container-fluid{
+    height: 100%;
+    width: 100%;
+}
+
+.mainRow {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
