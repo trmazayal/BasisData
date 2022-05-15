@@ -37,9 +37,9 @@
   }
 
   function validateForm() {
-    var durasi = document.forms["myForm"]["durasi"].value;
-    var = document.forms["myForm"]["jumlah_produk_hasil"].value;
-    if (durasi == "" && jumlah_produk_hasil == "") {
+    var x = document.forms["myForm"]["durasi"].value;
+    var y = document.forms["myForm"]["jumlah_produk_hasil"].value;
+    if (x == "" || y == "") {
       alert("“Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu.");
       return false;
     }
