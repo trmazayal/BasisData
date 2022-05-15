@@ -31,10 +31,10 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="#">Lihat Isi Lumbung</a>
                   {% if request.session.role == "Pengguna" %}
-                  <a class="dropdown-item" href="#">Upgrade Lumbung</a>
+                  <a class="dropdown-item" href="{% url 'upgrade-lumbung' %}">Upgrade Lumbung</a>
                   {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
                   {% endif %}
-                  <a class="dropdown-item" href="#">List Transaksi Upgrade Lumbung</a>
+                  <a class="dropdown-item" href="{% url 'transaksi-upgrade-lumbung' %}">List Transaksi Upgrade Lumbung</a>
                 </div>
               </li>
 
@@ -44,11 +44,11 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   {% if request.session.role == "Admin" %}
-                  <a class="dropdown-item" href="#">Buat Paket Koin</a>
+                  <a class="dropdown-item" href="{% url 'buat-paket-koin' %}">Buat Paket Koin</a>
                   {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
                   {% endif %}
-                  <a class="dropdown-item" href="#">List Paket Koin</a>
-                  <a class="dropdown-item" href="#">List Transaksi Pembelian Koin</a>
+                  <a class="dropdown-item" href="{% url 'paket-koin' %}">List Paket Koin</a>
+                  <a class="dropdown-item" href="{% url 'transaksi-pembelian-koin' %}">List Transaksi Pembelian Koin</a>
                 </div>
               </li>
 
@@ -118,7 +118,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="#">List Histori Produksi Hewan</a>                 
-                  <a class="dropdown-item" href="#">List Histori Produksi Tanaman</a>
+                  <a class="dropdown-item" href="{% url 'histori-produksi-tanaman' %}/">List Histori Produksi Tanaman</a>
                   <a class="dropdown-item" href="#">List Histori Produksi Makanan</a>             
                   {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
                 </div>
@@ -132,8 +132,8 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="#">Produksi Hewan</a>                 
                   <a class="dropdown-item" href="#">List Histori Produksi Hewan</a>
-                  <a class="dropdown-item" href="#">Produksi Tanaman</a>    
-                  <a class="dropdown-item" href="#">List Histori Produksi Tanaman</a>
+                  <a class="dropdown-item" href="{% url 'produksi-tanaman' %}">Produksi Tanaman</a>    
+                  <a class="dropdown-item" href="{% url 'histori-produksi-tanaman' %}">List Histori Produksi Tanaman</a>
                   <a class="dropdown-item" href="#">Produksi Produk Makanan</a>   
                   <a class="dropdown-item" href="#">List Histori Produksi Makanan</a> 
                   {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
