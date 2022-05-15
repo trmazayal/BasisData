@@ -11,7 +11,12 @@
         <div class="container">
             <h1 class="welcome">Welcome to <b>HI DAY E06</b>,</h1>
             <h1>{{nama_akun}}</h1>
-            <a href="{% url 'profil' %}" class="mybutton butwhite" role="button">My Profile</a>
+            <a href="{% url 'authentication:profil' %}" class="mybutton butwhite" role="button">My Profile</a>
+            {% if rolePengguna%}
+            <a href="{% url 'authentication:lihatIsiLumbung' %}" class="mybutton butwhite" role="button">My Lumbung</a>
+            {% elif roleAdmin%}
+            <a href="{% url 'authentication:lihatIsiLumbung' %}" class="mybutton butwhite" role="button">Lumbung</a>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}
