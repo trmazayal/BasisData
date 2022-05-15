@@ -45,7 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'login',
-    'tk_e06',
+    'paket_koin',
+    'lumbung',
+    'produk',
+    
 ]
 
 MIDDLEWARE = [

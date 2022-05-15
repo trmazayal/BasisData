@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Create Produksi
+{% endblock title %}
+{% block meta %}
+{% endblock meta %}
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  var sum = 1;
+
+  function addNew() {
+    sum+=1;  
+    var bahan = '<label class="label" id="bahan'+sum+'" name="bahan'+sum+'">Bahan:</label> <br>'+
+                '<select class="form-control" id="bahan'+sum+
+                                            '" name="bahan'+sum+'">{%for row in daftar_produk %}'+
+                    '<option value="{{row.nama}}"> {{row.nama}}</option>'+
+                  '{% endfor %} </select>';
+    var jumlah = '<label class="label"id="jumlah'+sum+'" name="jumlah'+sum+'">Bahan:</label> <br>'+
+                '<input type="number" id="jumlah'+sum+'" name="jumlah'+sum+'">';
+    
+    var newContentBahan = document.createElement('div');
+    newContentBahan.innerHTML = bahan
+    document.getElementById('target').appendChild(newContentBahan);
+    var newContentJumlah = document.createElement('div');
+    newContentJumlah.innerHTML = jumlah
+    document.getElementById('target').appendChild(newContentJumlah);
+  }
+  
+  function removeLastElem() {
+    sum-=1;
+    document.getElementById('target').lastChild.remove()
+    document.getElementById('target').lastChild.remove()
+  }
+
+  function validateForm() {
+    var x = document.forms["myForm"]["durasi"].value;
+    var y = document.forms["myForm"]["jumlah_produk_hasil"].value;
+    if (x == "" || y == "") {
+      alert("“Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu.");
+      return false;
+    }
+  }
+</script>
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Create Produksi</h1>
+  <h2 class="message">{{message}}</h2>
+  <br>
+  <div class="row justify-content-center">
+    <div class="login">      
+      <form  name="myForm" method="POST" action="{% url 'produk:createProduksi' %}" onsubmit="return validateForm()" method="post" required>
+        {% csrf_token %}
+
+        <label class="label" for="nama_produk">Nama Produk Makanan:</label>
+        <select class="form-control" name="nama_produk" id="nama_produk" >
+          {%for row in nama_produk %}
+          <option value="{{row.nama}}">{{row.nama}}</option>
+          {% endfor %}
+        </select>
+        <br>
+
+        <label class="label" for="alat_produksi">Alat Produksi:</label>
+        <select class="form-control" name="alat_produksi" id="alat_produksi" >
+          {%for row in alat_produksi %}
+          <option value="{{row.nama}}">{{row.nama}}</option>
+          {% endfor %}
+        </select>
+        <br>
+        {% comment %} <div class="loginForm">{{ form.as_p }}</div> {% endcomment %}
+        <div> 
+          <label class="label" id="durasi" name="durasi">Durasi:</label><br>
+          <input type="number" id="durasi" name="durasi"/>
+        </div>
+        <div> 
+          <label class="label" id="jumlah_produk_hasil" name="jumlah_produk_hasil">Jumlah Produk Hasil:</label><br>
+          <input type="number" id="jumlah_produk_hasil" name="jumlah_produk_hasil"/>
+        </div>
+        <label class="label">Daftar Bahan yang Dibutuhkan:</label><br>
+        <div id="target">
+          <div>        
+            <label class="label" id="bahan1" name="bahan1">Bahan:</label><br>
+            <select class="form-control" id="bahan1" name="bahan1">
+              {%for row in daftar_produk %}
+              <option value="{{row.nama}}">{{row.nama}}</option>
+              {% endfor %}
+            </select>  
+          </div>
+          <div> 
+            <label class="label" id="jumlah1" name="jumlah1">jumlah:</label><br>
+            <input type="number" id="jumlah1" name="jumlah1"/>
+          </div>
+        </div>    
+        <button type="button" class="mybutton butwhite" onclick="addNew()">Add</button>
+        <button type="button" class="mybutton butred" onclick="removeLastElem()">Remove</button>
+        {% comment %} <input id="add" type="button" value="Tambah Bahan" onclick="addNew()" class="mybutton butwhite"/>
+        <input id="remove" type="button" value="Kurangi Bahan" onclick="removeLastElem()" class="mybutton butred"/> {% endcomment %}
+        
+        <input type="submit" value="Create" name="tombol">
+      </form>
+      {% comment %} <input type="submit" value="Tambah Bahan" name="tombol" class="mybutton butwhite add_form_field"> {% endcomment %}
+      <p class="text--center" style="color: white;background-color: grey;border-radius: 7px;">{{message}}</p>
+    </div>
+  </div>
+</div>
+{% endblock content %}
