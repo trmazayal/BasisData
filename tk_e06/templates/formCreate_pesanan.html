@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    HI DAY | Pesanan
+{% endblock title %}
+
+{% block content %}
+    <center>
+        <h1>FORM BUAT PESANAN</h1>
+        <br/>
+        <form action = "" method="POST", id="form">
+            {% csrf_token %}
+            <label class="id_pesanan">ID Pesanan: </label>
+            <input type="text" class="form-control" id="pesanan_id" required disabled>
+            <label class="nama_pesanan">Nama Pesanan: </label>
+            <input type="text" class="form-control" id="nama_pesanan" required>
+            <label class="jenis_pesanan">Jenis Pesanan: </label>
+            <input type="text" class="form-control" id="jenis_pesanan" required>
+            <label class="pesanan_detail">Detail Pesanan: </label>
+            <br/>
+            <input type="submit" value="Create">
+            <br/>
+            <ul><a href="#">[BUAT]</ul>
+        </form>
+    </center>
+{% endblock content %}
