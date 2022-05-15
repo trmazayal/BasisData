@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    My Profile
+{% endblock title %}
+
+
+{% block content %}
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Profile</h1>
+    <div class="container-fluid">
+        <div class="col-md-8 offset-md-2 mt-5">
+              <p class="userName text-center"><b>{{nama_akun}}</b></p>
+              <p style="font-size: 24px;">{{role}}</p>
+              <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Data</th>
+                        <th scope="col">Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-striped">
+                    <th scope="row">Email</th>
+                    <td>{{email}}</td>
+                  </tr>
+                  {% if roleAdmin %}
+                  <tr class="table-striped">
+                  {% endif %}
+
+                  {% if rolePengguna %}
+                  <tr class="table-striped">
+                    <th scope="row">Nama Area Pertanian</th>
+                    <td>{{nama_area_pertanian}}</td>
+                  </tr>
+                  <tr class="table-striped">
+                    <th scope="row">XP</th>
+                    <td>{{xp}}</td>
+                  </tr>
+                  <tr class="table-striped">
+                    <th scope="row">Koin</th>
+                    <td>{{koin}}</td>
+                  </tr>
+                  <tr class="table-striped">
+                    <th scope="row">Level</th>
+                    <td>{{level}}</td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+            </table> 
+            <a href="{% url 'authentication:logout' %}" class="mybutton text-center" role="button">Log Out</a>
+            </h5>
+        </div>
+    </div>
+{% endblock content %}

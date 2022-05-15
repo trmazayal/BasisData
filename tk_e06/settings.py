@@ -14,6 +14,7 @@ from pathlib import Path
 
 # Add this line
 import dj_database_url
+import django_heroku
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,7 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'home',
+    'login',
+    'produk',
+    
 ]
 
 MIDDLEWARE = [
@@ -62,7 +65,9 @@ ROOT_URLCONF = 'tk_e06.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,6 +132,19 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# This is the directory for storing `collectstatic` results.
+# This shouldn't be included in your Git repository.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# You can use this directory to store project-wide static files.
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# Make sure the directories exist to prevent errors when doing `collectstatic`.
+for directory in [*STATICFILES_DIRS, STATIC_ROOT]:
+    directory.mkdir(exist_ok=True)
+    
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -135,3 +153,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Add this line
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+
+django_heroku.settings(config=locals(),staticfiles=False,logging=False)
