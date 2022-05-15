@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Petak Sawah
+{% endblock title %}
+
+
+{% block content %}
+<script>
+    function validateForm() {
+        var a = document.forms["myForm"]["nama"].value;
+        var b = document.forms["myForm"]["minimum_level"].value;
+        var c = document.forms["myForm"]["harga_beli"].value;
+        var d = document.forms["myForm"]["jenis_tanaman"].value;
+        if (a == "" || a == null || b == "" || b == null || c == "" || c == null || d == "" || d == null) {
+            alert("Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu");
+            return false;
+        }
+    }
+</script>
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Form Update Aset Petak Sawah</h1>
+    <div class="container-fluid">
+        <div class="col-md-8 offset-md-2 mt-5">  
+            <form class="was-validated" name="myForm" onsubmit="return validateForm()" action="/aset/menuLihatAset/">
+                <div class="mb-3">
+                    <label for="validationTextarea">ID</label>
+                    <input type="" placeholder="PS01" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="validationTextarea">Nama</label>
+                    <input type="" placeholder="Petak Sawah" readonlyd>
+                </div>
+                <div class="mb-3">
+                    <label for="validationTextarea">Minimum Level</label>
+                    <input type="number" name="minimum_level" required>
+                </div>
+                <div class="mb-3">
+                  <label for="validationTextarea">Harga Beli</label>
+                  <input type="number" name="harga_beli" required>
+              </div>
+              <div class="mb-3">
+                <label for="validationTextarea">Jenis Tanaman</label>
+                <select>
+                    <option value="Padi">Padi</option>
+                    <option value="Jagung">Jagung</option>
+                    <option value="Tebu">Tebu</option>
+                    <option value="Wortel">Wortel</option>
+                    <option value="Stroberi">Stroberi</option>
+                </select>
+                </div>
+                <input type="submit" value="TAMBAHKAN" name="tombol" class="mybutton">
+              </form>  
+        </div>
+    </div>
+{% endblock content %}

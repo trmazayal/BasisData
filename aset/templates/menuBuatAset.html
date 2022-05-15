@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+    <title>HI DAY | Buat Aset
+    </title>
+</head>
+<body>
+<h1>MENU BUAT ASET</h1>
+<button name="create_dekorasi" type="submit" value="Dekorasi" href="{% url 'aset:create_dekorasi' %}">Dekorasi</button>
+<button name="create_bibit_tanman" type="submit" value="Bibit Tanaman" href="{% url 'aset:create_bibit_tanaman' %}">Bibit Tanaman</button>
+<button name="create_kandang" type="submit" value="Kandang" href="{% url 'aset:create_kandang' %}">Kandang</button>
+<button name="create_hewan" type="submit" value="Hewan" href="{% url 'aset:create_hewan' %}">Hewan</button>
+<button name="create_alat_produksi" type="submit" value="Alat Produksi" href="{% url 'aset:create_alat_produksi' %}">Alat Produksi</button>
+<button name="create_petak_sawah" type="submit" value="Petak Sawah" href="{% url 'aset:create_petak_sawah' %}">Petak Sawah</button>
+</body>
+</html>
