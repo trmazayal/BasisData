@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'login',
     'paket_koin',
     'lumbung',
+    'produk',
     
 ]
 

@@ -34,7 +34,6 @@
                   <a class="dropdown-item" href="{% url 'authentication:lihatIsiLumbung' %}">Lihat Isi Lumbung</a>
                   {% if request.session.role == "Pengguna" %}
                   <a class="dropdown-item" href="{% url 'upgrade-lumbung' %}">Upgrade Lumbung</a>
-                  {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
                   {% endif %}
                   <a class="dropdown-item" href="{% url 'transaksi-upgrade-lumbung' %}">List Transaksi Upgrade Lumbung</a>
                 </div>
@@ -45,10 +44,9 @@
                   Koin
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {% if request.session.role == "Admin" %}
-                  <a class="dropdown-item" href="{% url 'buat-paket-koin' %}">Buat Paket Koin</a>
-                  {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
-                  {% endif %}
+                    {% if request.session.role == "Admin" %}
+                    <a class="dropdown-item" href="{% url 'buat-paket-koin' %}">Buat Paket Koin</a>
+                    {% endif %}
                   <a class="dropdown-item" href="{% url 'paket-koin' %}">List Paket Koin</a>
                   <a class="dropdown-item" href="{% url 'transaksi-pembelian-koin' %}">List Transaksi Pembelian Koin</a>
                 </div>
@@ -66,7 +64,6 @@
                   <a class="dropdown-item" href="#">List Hewan Menghasilkan Produk Hewan</a>                 
                   <a class="dropdown-item" href="#">Buat Bibit Menghasilkan Panen</a>
                   <a class="dropdown-item" href="#">List Bibit Menghasilkan Panen</a>
-                  {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
                   {% endif %}
                   {% if request.session.role == "Pengguna" %}               
                   <a class="dropdown-item" href="#">List Aset</a>
@@ -82,14 +79,13 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   {% if request.session.role == "Admin" %}
-                  <a class="dropdown-item" href="#">List Koleksi Aset</a>                 
-                  <a class="dropdown-item" href="#">List Transaksi Pembelian Aset</a>
-                  {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
+                    <a class="dropdown-item" href="#">List Koleksi Aset</a>                 
+                    <a class="dropdown-item" href="#">List Transaksi Pembelian Aset</a>
                   {% endif %}
                   {% if request.session.role == "Pengguna" %}               
-                  <a class="dropdown-item" href="#">List Koleksi Aset</a>        
-                  <a class="dropdown-item" href="#">Buat Transaksi Pembelian Aset</a>                 
-                  <a class="dropdown-item" href="#">List Transaksi Pembelian Aset</a>
+                    <a class="dropdown-item" href="#">List Koleksi Aset</a>        
+                    <a class="dropdown-item" href="#">Buat Transaksi Pembelian Aset</a>                 
+                    <a class="dropdown-item" href="#">List Transaksi Pembelian Aset</a>
                   {% endif %}
                 </div>
               </li>
@@ -100,15 +96,14 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   {% if request.session.role == "Admin" %}
-                  <a class="dropdown-item" href="{% url 'produk:createProduk' %}">Buat Produk</a>                 
-                  <a class="dropdown-item" href="{% url 'produk:produk' %}">List Produk</a>
-                  <a class="dropdown-item" href="{% url 'produk:createProduksi' %}">Buat Produksi</a>        
-                  <a class="dropdown-item" href="{% url 'produk:produksi' %}">List Produksi</a>         
-                  {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
+                    <a class="dropdown-item" href="{% url 'produk:createProduk' %}">Buat Produk</a>                 
+                    <a class="dropdown-item" href="{% url 'produk:produk' %}">List Produk</a>
+                    <a class="dropdown-item" href="{% url 'produk:createProduksi' %}">Buat Produksi</a>        
+                    <a class="dropdown-item" href="{% url 'produk:produksi' %}">List Produksi</a>         
                   {% endif %}
                   {% if request.session.role == "Pengguna" %}                            
-                  <a class="dropdown-item" href="{% url 'produk:produk' %}">List Produk</a>     
-                  <a class="dropdown-item" href="{% url 'produk:produksi' %}">List Produksi</a>  
+                    <a class="dropdown-item" href="{% url 'produk:produk' %}">List Produk</a>     
+                    <a class="dropdown-item" href="{% url 'produk:produksi' %}">List Produksi</a>  
                   {% endif %}
                 </div>
               </li>
@@ -122,7 +117,6 @@
                   <a class="dropdown-item" href="#">List Histori Produksi Hewan</a>                 
                   <a class="dropdown-item" href="{% url 'histori-produksi-tanaman' %}">List Histori Produksi Tanaman</a>
                   <a class="dropdown-item" href="#">List Histori Produksi Makanan</a>             
-                  {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}
                 </div>
               </li>
               {% endif %}
@@ -149,7 +143,6 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   {% if request.session.role == "Admin" %}
                   <a class="dropdown-item" href="#">Buat Pesanan</a>                       
-                  {% comment %} <a class="dropdown-item" href="{% url 'buat-lumbung' %}">Lumbung</a> {% endcomment %}   
                   {% endif %}                    
                   <a class="dropdown-item" href="#">List Pesanan</a>     
                   <a class="dropdown-item" href="#">List Histori Penjualan</a>  
