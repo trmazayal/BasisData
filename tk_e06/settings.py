@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'paket_koin',
     'lumbung',
     'produk',
-    
+    'tk_e06',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    HI DAY | Produksi Hewan
+{% endblock title %}
+
+{% block content %}
+    <center>
+        <h1>FORM PRODUKSI HEWAN</h1>
+        <form action = "" method="POST", id="form">
+            {% csrf_token %}
+            <label class="id_hewan">ID Hewan: </label>
+            <select name="id_hewan" id="id_hewan" required>
+                {% for data in result %}
+                <option value={{data.nama}}>{{data.nama}}</option>
+                {% endfor %}}
+            </select>
+            <br/>
+            <label class="jumlah">Jumlah: </label>
+            <input type="number" class="form-control" id="jumlah" required>
+            <label class="matkul_day">XP: </label>
+            <input type="number" class="form-control" id="end_time_matkul" required disabled>
+            <br/>
+            <input type="submit" value="Create">
+            <br/>
+            <ul><a href="#">[PRODUKSI]</ul>
+        </form>
+    </center>
+{% endblock content %}
