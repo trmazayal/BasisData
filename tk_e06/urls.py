@@ -16,6 +16,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from .views import create_pesanan, list_histori_hewan, list_histori_penjualan, list_pesanan, detail_histori_penjualan, detail_pesanan, create_histori_hewan, create_histori_penjualan, update_pesanan
 
 urlpatterns = [
     path('admin/', admin.site.urls),

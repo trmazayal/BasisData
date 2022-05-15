@@ -28,5 +28,4 @@ urlpatterns = [
     path('Register/', register),
     path('RegisterRole/', registerPenggunaRole),
     path('insertAdmin/', insertAdmin),
-    path('insertPengguna/', insertPengguna),
 ]
