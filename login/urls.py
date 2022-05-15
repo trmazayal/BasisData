@@ -25,8 +25,9 @@ urlpatterns = [
     path('Profil/', profil, name='profil'),
     path('LihatIsiLumbung/', lihatIsiLumbung, name='lihatIsiLumbung'),
     path('Logout/', logout,  name='logout'),
-    path('Home/', login),
+    path('Home/', login, name='home'),
     path('Register/', register),
     path('RegisterRole/', registerPenggunaRole),
     path('insertAdmin/', insertAdmin),
+    
 ]
