@@ -30,5 +30,4 @@ urlpatterns = [
     path('DetailPesanan/<id_pesanan>', detail_pesanan, name='detail_pesanan'),
     path('CreatePesanan/', create_pesanan, name='create_pesanan'),
     path('UpdatePesanan/', update_pesanan, name='create_update_pesanan'),
-
 ]
