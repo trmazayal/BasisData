@@ -16,7 +16,4 @@ class CreateProdukForm(forms.Form):
     harga_jual = forms.CharField(label='Harga Jual', required=True, widget=forms.TextInput(attrs={'placeholder':'*Required'}))
     sifat_produk = forms.CharField(max_length=20, label='Sifat', required=True, widget=forms.TextInput(attrs={'placeholder':'*Required'}))
     
-# class CreateProduksiForm(forms.Form):
-#     durasi = forms.CharField(max_length=10, label='Durasi', required=True, widget=forms.TextInput(attrs={'placeholder':'*Required'}))
-#     jumlah_produk_hasil = forms.CharField(max_length=10, label='Jumlah Produk Hasil', required=True, widget=forms.TextInput(attrs={'placeholder':'*Required'}))
     

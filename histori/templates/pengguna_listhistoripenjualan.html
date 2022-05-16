@@ -4,7 +4,9 @@
 {% block title %}
     HI DAY | List Histori Penjualan
 {% endblock title %}
-
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
 {% block content %}
     <center>
         <br/>
@@ -31,7 +33,7 @@
                 <td>{{ penjualan.xp }}</td>
                 <td>
                     <ul>
-                        <a href="{% url 'detail_histori_penjualan' penjualan.id_pesanan %}">[Detail]
+                        <a href="{% url 'histori:detail_histori_penjualan' penjualan.id_pesanan %}">[Detail]
                     </ul>
                 </td>
             </tr>

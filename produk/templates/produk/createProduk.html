@@ -5,14 +5,27 @@
     Create Produk
 {% endblock title %}
 
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
 
 {% block content %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
   function validateForm() {
-    var durasi = document.forms["myForm"]["formProduk"].value;
-    if (durasi == "" ) {
-      alert("“Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu.");
+    var nama = document.forms["myForm"]["nama"].value;
+    var harga_jual = document.forms["myForm"]["harga_jual"].value;
+    var sifat_produk = document.forms["myForm"]["sifat_produk"].value;
+    if (nama == "" ) {
+      alert("“Nama harus diisi”");
+      return false;
+    }
+    if (harga_jual == "" ) {
+      alert("“Harga Jual harus diisi”");
+      return false;
+    }
+    if (sifat_produk == "" ) {
+      alert("“Sifat Produk harus diisi”");
       return false;
     }
   }
@@ -23,7 +36,7 @@
   <br>
   <div class="row justify-content-center">
     <div class="login">      
-      <form  method="POST" action="{% url 'produk:createProduk' %}" onsubmit="return validateForm()" method="post" required>
+      <form  name="myForm" method="POST" action="{% url 'produk:createProduk' %}" onsubmit="return validateForm()" method="post" required>
         {% csrf_token %}
 
         <label class="label" for="jenis_produk">Jenis Produk:</label>
@@ -36,12 +49,23 @@
 
         <br>
 
-        <div class="loginForm" name="formProduk">{{ form.as_p }}</div>
+        {% comment %} <div class="loginForm" name="formProduk">{{ form.as_p }}</div> {% endcomment %}
+        <div>
+          <label class="label" id="nama" name="nama">Nama:</label><br>
+          <input type="text" id="nama" name="nama" placeholder="*Required">
         <br>
-
+        <div>
+          <label class="label" id="harga_jual" name="harga_jual">Harga Jual:</label><br>
+          <input type="text" id="harga_jual" name="harga_jual" placeholder="*Required">
+        <br>
+        <div>
+          <label class="label" id="sifat_produk" name="sifat_produk">Sifat Produk:</label><br>
+          <input type="text" id="sifat_produk" name="sifat_produk" placeholder="*Required">
+        <br>
+          </div>
         <input type="submit" value="Create" name="tombol">
       </form>
-      
+      <p class="text--center" style="color: white;background-color: grey;border-radius: 7px;">{{message}}</p>
     </div>
   </div>
 </div>

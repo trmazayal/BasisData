@@ -5,6 +5,9 @@
     Update Produk
 {% endblock title %}
 
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
 
 {% block content %}
 <div class="container justify-content-center align-items-center">
@@ -15,7 +18,7 @@
       <div class="login">      
         <h2>Update Produk</h2>
         <br>
-        <form  method="POST" action="/update_produk/">
+        <form  method="POST" action="/produk/update_produk/">
           {% csrf_token %}
           {% for field in form.visible_fields %}
             <div class="loginForm">{{ field.label_tag }} {{ field }}</div>

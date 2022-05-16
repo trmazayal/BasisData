@@ -1,4 +1,4 @@
-import email
+
 from urllib import request, response
 from django.shortcuts import render
 from django.db import connection

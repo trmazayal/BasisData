@@ -15,7 +15,7 @@
     {% endblock meta %}
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'authentication:home' %}">
         <img src="{% static 'images/favicon.png' %}" height="32px" alt="" class="d-inline-block align-top">
@@ -114,7 +114,7 @@
                   Histori Produksi
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{% url 'list_histori_hewan' %}">List Histori Produksi Hewan</a>              
+                  <a class="dropdown-item" href="{% url 'histori:list_histori_hewan' %}">List Histori Produksi Hewan</a>              
                   <a class="dropdown-item" href="{% url 'histori-produksi-tanaman' %}">List Histori Produksi Tanaman</a>
                   <a class="dropdown-item" href="{% url 'produk:historiProduksiMakanan' %}">List Histori Produksi Makanan</a>             
                 </div>
@@ -127,7 +127,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="">Produksi Hewan</a>                 
-                  <a class="dropdown-item" href="{% url 'list_histori_hewan' %}">List Histori Produksi Hewan</a>
+                  <a class="dropdown-item" href="{% url 'histori:list_histori_hewan' %}">List Histori Produksi Hewan</a>
                   <a class="dropdown-item" href="{% url 'produksi-tanaman' %}">Produksi Tanaman</a>    
                   <a class="dropdown-item" href="{% url 'histori-produksi-tanaman' %}">List Histori Produksi Tanaman</a>
                   <a class="dropdown-item" href="#">Produksi Produk Makanan</a>   
@@ -142,10 +142,10 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   {% if request.session.role == "Admin" %}
-                  <a class="dropdown-item" href="{% url 'create_pesanan' %}">Buat Pesanan</a>                       
+                  <a class="dropdown-item" href="{% url 'histori:create_pesanan' %}">Buat Pesanan</a>                       
                   {% endif %}                    
-                  <a class="dropdown-item" href="{% url 'list_pesanan' %}">List Pesanan</a>     
-                  <a class="dropdown-item" href="{% url 'list_histori_penjualan' %}">List Histori Penjualan</a>  
+                  <a class="dropdown-item" href="{% url 'histori:list_pesanan' %}">List Pesanan</a>     
+                  <a class="dropdown-item" href="{% url 'histori:list_histori_penjualan' %}">List Histori Penjualan</a>  
 
                 </div>
               </li>

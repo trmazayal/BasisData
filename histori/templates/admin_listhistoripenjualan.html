@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    HI DAY | List Histori Penjualan
+{% endblock title %}
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
+{% block content %}
+    <center>
+        <br/>
+        <h1><b>List Histori Penjualan</b></h1>
+        {% if result %}
+        <table border="3" width="35%">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Email Pengguna</th>
+                    <th scope="col">Waktu Penjualan</th>
+                    <th scope="col">ID Pesanan</th>
+                    <th scope="col">Koin Diperoleh</th>
+                    <th scope="col">XP Diperoleh</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <body>
+            {% for penjualan in result %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ penjualan.email }}</td>
+                <td>{{ penjualan.waktu_penjualan }}</td>
+                <td>{{ penjualan.id_pesanan }}</td>
+                <td>{{ penjualan.koin }}</td>
+                <td>{{ penjualan.xp }}</td>
+                {% comment %} <td>
+                    <button type="submit" value="detail" href="{% 'histori:detail_histori_penjualan' penjualan.id_pesanan %}">[Detail]</button>
+                </td> {% endcomment %}
+            </tr>
+            {% endfor %}
+            </body>
+        </table>
+        {% else %}
+        <h3>Belum Ada Penjualan</h3>
+        {% endif %}
+    </center>
+{% endblock content %}

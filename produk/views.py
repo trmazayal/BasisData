@@ -52,9 +52,6 @@ def get_input_produksi(request):
 # Create Produk
 def createProduk(request):
     message =""
-    # cursor.execute("select id_merk_obat from merk_obat order by cast(id_merk_obat as int)")
-    # id_merk_obat_view = namedtuplefetchall(cursor)
-
     if request.method =='POST':
         input = get_input_produk(request)
         if input[3] == "Hasil Panen":
@@ -72,12 +69,12 @@ def createProduk(request):
         
         id_produk = int(id_produk[2:])
         id_produk = int(id_produk) + 1
-        idString2 = prefixID+str(id_produk)
+        idString2 = prefixID+(str(id_produk).zfill(3))
         
         try :
             cursor.execute("insert into produk values ('"+idString2+"','"+input[0]+"','"+input[1]+"','"+input[2]+"')")
             cursor.close()
-            return redirect('/read_produk/')
+            return redirect('/produk/read_produk/')
         except:
             message = "Data tidak berhasil dibuat"
 
@@ -216,7 +213,6 @@ def createProduksi(request):
         durasi = int(input[2])
         jumlah_produk_hasil = input[3]
         
-
         cursor.execute("select id_aset from alat_produksi left join aset on alat_produksi.id_aset = aset.id where nama = '"+ nama_alat_produksi +"'")
         id_alat_produksi = namedtuplefetchall(cursor)
         id_alat_produksi = id_alat_produksi[0].id_aset
@@ -224,8 +220,6 @@ def createProduksi(request):
         cursor.execute("select id_produk from produk_makanan left join produk on produk_makanan.id_produk = produk.id where nama = '"+ nama_produk_makanan +"'")
         id_produk_makanan = namedtuplefetchall(cursor)
         id_produk_makanan = id_produk_makanan[0].id_produk
-        
-        
           
         bahan = []
         jumlah = []
@@ -271,7 +265,7 @@ def createProduksi(request):
                 cursor.execute("insert into produk_dibutuhkan_oleh_produk_makanan(id_produk_makanan, id_produk, jumlah) values ('"+str(id_produk_makanan)+"', '"+id_produk[i]+"', '"+jumlah[i]+"')")
             
             cursor.close()
-            return redirect('/read_produksi/')
+            return redirect('/produk/read_produksi')
         except:
             message = "Data tidak berhasil dibuat"      
         
@@ -332,7 +326,20 @@ def viewsProduksi(request, message=""):
 
 
 # Update Produksi
-# def updateProduk(request):
+def updateProduk(request):
+    id = request.POST['id']
+    nama = request.POST['nama']
+    harga_jual = request.POST['harga_jual']
+    sifat_produk = request.POST['sifat_produk']
+
+    cursor = connection.cursor()
+    cursor.execute("set search_path to hiday")
+    
+    cursor.execute("update produk set nama = '" + nama + "',  harga_jual = '" +  harga_jual
+    + "', sifat_produk = '"+  sifat_produk + "' where id = '"+ id +"'")
+
+    message = "Data berhasil di update"
+    return viewsProduk(request, message)
     
 
 # Delete Produksi
@@ -344,9 +351,8 @@ def deleteProduksi(request, id):
     id_produk = namedtuplefetchall(cursor)
     id_produk = id_produk[0].id
     cursor.execute("delete from produksi where id_produk_makanan ='"+ id + "'")
-    cursor.execute("delete from produksi where id_produk_makanan ='"+ id_produk + "'")
-    cursor.execute("select * from produksi order by id_produk_makanan")
-    hasil = namedtuplefetchall(cursor)
+    cursor.execute("delete from produk_dibutuhkan_oleh_produk_makanan where id_produk_makanan ='"+ id_produk + "'")
+    cursor.close()
 
     message = "Data berhasil dihapus"
     return viewsProduksi(request, message)

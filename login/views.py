@@ -11,7 +11,6 @@ def namedtuplefetchall(cursor):
 
 def index(request, validasi = None):
     try:
-        email = request.session['email']
         return login(request)
     except KeyError:
         formulir = LoginForm()

@@ -4,8 +4,10 @@
 {% block title %}
     Create Produksi
 {% endblock title %}
-{% block meta %}
-{% endblock meta %}
+
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
 
 {% block content %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -37,11 +39,25 @@
   }
 
   function validateForm() {
-    var x = document.forms["myForm"]["durasi"].value;
-    var y = document.forms["myForm"]["jumlah_produk_hasil"].value;
-    if (x == "" || y == "") {
-      alert("“Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu.");
-      return false;
+    var durasi = document.forms["myForm"]["durasi"].value;
+    var jumlah_produk_hasil = document.forms["myForm"]["jumlah_produk_hasil"].value;
+    var bahan1 = document.forms["myForm"]["bahan1"].value;
+    var jumalah1 = document.forms["myForm"]["jumlah1"].value;
+    if (durasi == "" ) {
+        alert("Durasi harus diisi");
+        return false;
+    }
+    if (jumlah_produk_hasil == "" ) {
+        alert("Jumlah Produk Hasil harus diisi");
+        return false;
+    }
+    if (bahan1 == "" ) {
+        alert("Bahan harus diisi");
+        return false;
+    }
+    if (jumalah1 == "" ) {
+        alert("Jumlah harus diisi");
+        return false;
     }
   }
 </script>
@@ -95,12 +111,8 @@
         </div>    
         <button type="button" class="mybutton butwhite" onclick="addNew()">Add</button>
         <button type="button" class="mybutton butred" onclick="removeLastElem()">Remove</button>
-        {% comment %} <input id="add" type="button" value="Tambah Bahan" onclick="addNew()" class="mybutton butwhite"/>
-        <input id="remove" type="button" value="Kurangi Bahan" onclick="removeLastElem()" class="mybutton butred"/> {% endcomment %}
-        
         <input type="submit" value="Create" name="tombol">
       </form>
-      {% comment %} <input type="submit" value="Tambah Bahan" name="tombol" class="mybutton butwhite add_form_field"> {% endcomment %}
       <p class="text--center" style="color: white;background-color: grey;border-radius: 7px;">{{message}}</p>
     </div>
   </div>
