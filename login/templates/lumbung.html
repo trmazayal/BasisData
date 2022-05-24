@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    My Profile
+{% endblock title %}
+
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
+
+{% block content %}
+<div class="container justify-content-center align-items-center">
+    <div style="padding-bottom: 20px; padding-top: 20px;">
+        <a href="{% url 'authentication:login' %}" class="back">&lt Back to Home</a>
+    </div> 
+  <h1 class="list_title">Detail Lumbung</h1>
+    <div class="container-fluid">
+        <div class="col-md-8 offset-md-2 mt-5">
+            {% if rolePengguna %}
+              <p style="font-size: 24px;">Level: {{level}}</p>
+              <p style="font-size: 24px;">Kapasitas: {{total}}/{{kapasitas_maksimal}}</p>
+            {% endif %}
+                <div class="row justify-content-center">
+                    <p class="text-center" style="font-size: 24px;">Hasil Panen</p>
+                    <table class="table table-hover table-striped text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                {% if roleAdmin %}
+                                <th scope="col">Email Pemilik Lumbung</th>
+                                {% endif %}
+                                <th scope="col">ID Produk</th>
+                                <th scope="col">Nama Produk</th>
+                                <th scope="col">Harga Jual</th>
+                                <th scope="col">Sifat Produk</th>
+                                <th scope="col">Jumlah Produk</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {%for row in hasil_panen %}
+                            <tr class="table-striped">
+                            <th scope="row">{{forloop.counter}}</th>
+                            {% if roleAdmin %}
+                            <td>{{row.email}}</td>
+                            {% endif %}
+                            <td>{{row.id_produk}}</td>
+                            <td>{{row.nama}}</td>
+                            <td>{{row.harga_jual}}</td>
+                            <td>{{row.sifat_produk}}</td>
+                            <td>{{row.jumlah}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table> 
+
+                    <p class="text-center" style="font-size: 24px;">Produk Hewan</p>
+                    <table class="table table-hover table-striped text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                {% if roleAdmin %}
+                                <th scope="col">Email Pemilik Lumbung</th>
+                                {% endif %}
+                                <th scope="col">ID Produk</th>
+                                <th scope="col">Nama Produk</th>
+                                <th scope="col">Harga Jual</th>
+                                <th scope="col">Sifat Produk</th>
+                                <th scope="col">Jumlah Produk</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {%for row in produk_hewan %}
+                            <tr class="table-striped">
+                            <th scope="row">{{forloop.counter}}</th>
+                            {% if roleAdmin %}
+                            <td>{{row.email}}</td>
+                            {% endif %}
+                            <td>{{row.id_produk}}</td>
+                            <td>{{row.nama}}</td>
+                            <td>{{row.harga_jual}}</td>
+                            <td>{{row.sifat_produk}}</td>
+                            <td>{{row.jumlah}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table> 
+
+                    <p class="text-center" style="font-size: 24px;">Produk Makanan</p>
+                    <table class="table table-hover table-striped text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                {% if roleAdmin %}
+                                <th scope="col">Email Pemilik Lumbung</th>
+                                {% endif %}
+                                <th scope="col">ID Produk</th>
+                                <th scope="col">Nama Produk</th>
+                                <th scope="col">Harga Jual</th>
+                                <th scope="col">Sifat Produk</th>
+                                <th scope="col">Jumlah Produk</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {%for row in produk_makanan %}
+                            <tr class="table-striped">
+                            <th scope="row">{{forloop.counter}}</th>
+                            {% if roleAdmin %}
+                            <td>{{row.email}}</td>
+                            {% endif %}
+                            <td>{{row.id_produk}}</td>
+                            <td>{{row.nama}}</td>
+                            <td>{{row.harga_jual}}</td>
+                            <td>{{row.sifat_produk}}</td>
+                            <td>{{row.jumlah}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table> 
+                </div>
+                
+            </table> 
+            </h5>
+        </div>
+    </div>
+{% endblock content %}

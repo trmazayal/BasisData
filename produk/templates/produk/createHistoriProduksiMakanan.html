@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Create Produksi
+{% endblock title %}
+
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
+
+{% block content %}
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Create Produksi</h1>
+  <h2 class="message">{{message}}</h2>
+  <br>
+  <div class="row justify-content-center">
+    <div class="login">      
+      <form  method="POST" action="{% url 'produk:createProduksi' %}">
+        {% csrf_token %}
+
+        <label class="label" for="jenis_produk">Jenis Produk:</label>
+  
+        <select class="form-control" name="jenis_produk" id="jenis_produk" >
+          {%for row in jenis_produk %}
+          <option value="{{row}}">{{row}}</option>
+          {% endfor %}
+        </select>
+
+        <br>
+
+        <div class="loginForm">{{ form.as_p }}</div>
+        <br>
+
+        <input type="submit" value="Create" name="tombol">
+      </form>
+      
+    </div>
+  </div>
+</div>
+{% endblock content %}

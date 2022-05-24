@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Produksi Tanaman
+{% endblock title %}
+
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
+
+{% block content %}
+<script>
+    function validateForm() {
+        var x = document.forms["myForm"]["jumlah"].value;
+        if (x == "" || x == null) {
+            alert("Anda tidak memiliki bibit yang cukup, silahkan membeli bibit terlebih dahulu");
+            return false;
+        }
+    }
+</script>
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Form Produksi Tanaman</h1>
+    <div class="container-fluid">
+        <div class="col-md-8 offset-md-2 mt-5">  
+            <form class="was-validated" name="myForm" onsubmit="return validateForm()" action="/lumbung/histori-produksi-tanaman/">
+                <div class="mb-3">
+                    <label for="validationTextarea">Bibit tanaman</label>
+                    <select>
+                      <option value="Padi">Padi</option>
+                      <option value="Jagung">Jagung</option>
+                      <option value="Tebu">Tebu</option>
+                      <option value="Wortel">Wortel</option>
+                      <option value="Stroberi">Stroberi</option>
+                    </select>
+                  </div>
+                <div class="mb-3">
+                    <label for="validationTextarea">Jumlah</label>
+                    <input type="number" name="jumlah" required>
+                  </div>
+                <div class="mb-3">
+                  <label for="validationTextarea">XP</label>
+                  <input type="" placeholder="5" readonly>
+                </div>
+                <input type="submit" value="Produksi" name="tombol" class="mybutton">
+              </form>  
+        </div>
+    </div>
+{% endblock content %}

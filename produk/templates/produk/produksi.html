@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Produksi
+{% endblock title %}
+
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
+
+{% block content %}
+<div class="container justify-content-center align-items-center">
+    <h1 class="list_title">Produksi</h1>
+    <h2 class="message">{{message}}</h2>
+
+    <div class="row justify-content-center">
+        {% if roleAdmin %}
+        <a href="{% url 'produk:createProduksi' %}" class="mybutton" role="button" style="margin-bottom: 30px;">Create Item</a>
+        {% endif %}
+        <table class="table table-hover table-striped text-center">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Produk Makanan</th>
+                    <th scope="col">Alat Produksi</th>
+                    <th scope="col">Durasi</th>
+                    <th scope="col">Jumlah Unit Hasil</th>
+                    <th scope="col">Action</th>
+                    {% if roleAdmin %}
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                    {% endif %} 
+                </tr>
+            </thead>
+            <tbody>
+            {%for row in hasil %}
+                <tr class="table-striped">
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{row.produk_makanan}}</td>
+                <td>{{row.alat_produksi}}</td>
+                <td>{{row.durasi}}</td>
+                <td>{{row.jumlah_unit_hasil}}</td>
+                {% comment %} <td><a  class="btn btn-outline-success" style="" role="button">DETAIL</a></td> {% endcomment %}
+                <!-- Modal -->
+                <td><button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#{{row.id_produk_makanan}}Modal">
+                    DETAIL
+                  </button></td>
+                <!-- Modal -->
+                <div class="modal fade" id="{{row.id_produk_makanan}}Modal" tabindex="-1" aria-labelledby="{{row.id_produk_makanan}}ModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="{{row.id_produk_makanan}}ModalLabel">{{row.produk_makanan}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <b>Nama Produk Makanan: </b><p>{{row.produk_makanan}}</p>
+                            <b>Alat Produksi: </b><p>{{row.alat_produksi}}</p>
+                            <b>Durasi Produksi (dalam menit): </b><p>{{row.durasi}}</p>
+                            <b>Jumlah Produk yang Dihasilkan: </b><p>{{row.jumlah_unit_hasil}}</p>
+
+                            <b>Daftar Bahan yang Dibutuhkan: </b>
+
+                            {% for row2 in produk_bahan %}
+                                {% if row.id_produk_makanan == row2.id_produk_makanan %} 
+                                    <p>{{row2.nama}}: {{row2.jumlah}}</p> 
+                                {% endif %}
+                            {% endfor %} 
+
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                {% if roleAdmin %}
+                <!-- belum selesai -->
+                <td><a  class="mybutton butwhite" role="button">EDIT</a></td>
+                    {% if row.can_delete %}
+                        <td><a href="{% url 'produk:deleteProduksi' row.id_produk_makanan %}" class="mybutton butred" role="button">DELETE</a></td>
+                    {% endif %}
+                {% endif %} 
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table> 
+    </div>
+</div>
+{% endblock content %}
+
+
+

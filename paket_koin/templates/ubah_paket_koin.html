@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Ubah Paket Koin
+{% endblock title %}
+
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
+
+{% block content %}
+<script>
+    function validateForm() {
+        var x = document.forms["myForm"]["harga"].value;
+        if (x == "" || x == nulll) {
+            alert("Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu");
+            return false;
+        }
+    }
+</script>
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Form Ubah Paket Koin</h1>
+    <div class="container-fluid">
+        <div class="col-md-8 offset-md-2 mt-5">
+              
+            <form class="was-validated" name="myForm" onsubmit="return validateForm()" action="/paket-koin/">
+                <div class="mb-3">
+                    <label for="validationTextarea">Jumlah Koin</label>
+                    <input type="number" placeholder="100" disabled>
+                  </div>
+                <div class="mb-3">
+                    <label for="validationTextarea">Harga</label>
+                    <input type="number" name="harga">
+                  </div>
+                <input type="submit" value="Simpan" name="tombol" class="mybutton">
+              </form>
+        </div>
+    </div>
+{% endblock content %}

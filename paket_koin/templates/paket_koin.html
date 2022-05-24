@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    List Paket Koin
+{% endblock title %}
+
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
+
+{% block content %}
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">List Paket Koin</h1>
+    <div class="container-fluid">
+        <div class="col-md-8 offset-md-2 mt-5">
+              <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Jumlah Koin</th>
+                        <th scope="col">Harga</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in paket_koin %}
+                  <tr class="table-striped">
+                    <td>{{forloop.counter}}</td>
+                    <td>{{data.jumlah_koin}}</td>
+                    <td>Rp{{data.harga}}</td>
+
+                    {% if rolePengguna %}
+                    <td>
+                        <a href="{% url 'pembelian-paket-koin' %}" class="mybutton">Beli</a> 
+                    </td> 
+                    {% endif %}
+
+                    {% if roleAdmin %}
+                    <td>
+                        <a href="{% url 'ubah-paket-koin' %}" class="mybutton">Update</a>
+                        <br>
+                        <br>
+                        <a href="{% url 'paket-koin' %}" class="mybutton">Delete</a>
+                    </td> 
+                    {% endif %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+            </table> 
+        </div>
+    </div>
+
+<script>
+    function updateForm() {
+        var x = document.forms["myForm"]["fname"].value;
+        if (x == "" || x == null) {
+            alert("Name must be filled out");
+            return false;
+        }
+    }
+</script>
+{% endblock content %}

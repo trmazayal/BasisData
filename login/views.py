@@ -5,14 +5,12 @@ from collections import namedtuple
 
 
 def namedtuplefetchall(cursor):
-    "Return all rows from a cursor as a namedtuple"
     desc = cursor.description
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
 
 def index(request, validasi = None):
     try:
-        email = request.session['email']
         return login(request)
     except KeyError:
         formulir = LoginForm()
@@ -37,7 +35,16 @@ def login(request):
     password = str(password)
     cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
-    cursor.execute("select * from pengguna where email='"+email+"'")
+    cursor.execute("""select result.email, result.password
+                        from akun, (
+                        select email, password
+                        from pengguna
+                        union
+                        select email, password
+                        from admin
+                        ) as result
+                        where akun.email = result.email and  result.email='"""+email+"' and result.password='"+password+"'")
+     
     hasil = namedtuplefetchall(cursor)
     role = cekRole(email)
     roleAdmin = False
@@ -258,3 +265,108 @@ def insertPengguna(request):
         }
         cursor.close()
         return render(request, "home.html", argument)
+    
+def lihatIsiLumbung(request):
+    try:
+        email = request.session['email']
+    except Exception as e:
+        return redirect('/')
+    cursor = connection.cursor()
+    cursor.execute("set search_path to hiday")
+    cursor.execute("select * from akun where email='"+email+"'")
+    pengguna = namedtuplefetchall(cursor)
+
+    role = cekRole(email)
+    roleAdmin = False
+    rolePengguna = False
+    if (role == 'Admin'):
+        roleAdmin = True
+    if (role == 'Pengguna'):
+        rolePengguna = True
+        
+    if (roleAdmin):
+        cursor.execute("select * from admin where email='"+email+"'")
+        admin = namedtuplefetchall(cursor)
+        email = admin[0].email
+
+        cursor.execute("""select l.email,id_produk, p.nama, p.harga_jual, p.sifat_produk, lmp.jumlah
+                from lumbung l, lumbung_memiliki_produk lmp, produk p
+                where l.email = lmp.id_lumbung
+                and lmp.id_produk = p.id
+                and id_produk like 'HP%' order by id_produk,l.email""")
+        hasil_panen = namedtuplefetchall(cursor)
+        
+        cursor.execute("""select l.email,id_produk, p.nama, p.harga_jual, p.sifat_produk, lmp.jumlah
+                from lumbung l, lumbung_memiliki_produk lmp, produk p
+                where l.email = lmp.id_lumbung
+                and lmp.id_produk = p.id
+                and id_produk like 'PH%' order by id_produk,l.email""")
+        produk_hewan = namedtuplefetchall(cursor)
+        
+        cursor.execute("""select l.email,id_produk, p.nama, p.harga_jual, p.sifat_produk, lmp.jumlah
+                from lumbung l, lumbung_memiliki_produk lmp, produk p
+                where l.email = lmp.id_lumbung
+                and lmp.id_produk = p.id
+                and id_produk like 'PM%' order by id_produk,l.email""")
+        produk_makanan = namedtuplefetchall(cursor)
+
+
+        argument = {
+            'hasil_panen' : hasil_panen,
+            'produk_hewan' : produk_hewan,
+            'produk_makanan' : produk_makanan,
+            'role' : role,
+            'roleAdmin' : roleAdmin,
+            'rolePengguna' : rolePengguna,
+        }
+    
+    elif (rolePengguna):
+        cursor.execute("select * from pengguna where email='"+email+"'")
+        pengguna = namedtuplefetchall(cursor)
+        email = pengguna[0].email
+        
+        cursor.execute("""select level, total , kapasitas_maksimal 
+                       from lumbung where email='"""
+                       +email+"'")
+        lumbung = namedtuplefetchall(cursor)
+        level = lumbung[0].level
+        total = lumbung[0].total
+        kapasitas_maksimal = lumbung[0].kapasitas_maksimal
+        
+        cursor.execute("""select id_produk, p.nama, p.harga_jual, p.sifat_produk, lmp.jumlah
+                from lumbung l, lumbung_memiliki_produk lmp, produk p
+                where l.email = lmp.id_lumbung 
+                and lmp.id_produk = p.id 
+                and id_produk like 'HP%' 
+                and lmp.id_lumbung = '"""+email+"' order by id_produk""")
+        hasil_panen = namedtuplefetchall(cursor)
+        
+        cursor.execute("""select id_produk, p.nama, p.harga_jual, p.sifat_produk, lmp.jumlah
+                from lumbung l, lumbung_memiliki_produk lmp, produk p
+                where l.email = lmp.id_lumbung 
+                and lmp.id_produk = p.id 
+                and id_produk like 'PH%' 
+                and lmp.id_lumbung = '"""+email+"' order by id_produk""")
+        produk_hewan = namedtuplefetchall(cursor)
+        
+        cursor.execute("""select id_produk, p.nama, p.harga_jual, p.sifat_produk, lmp.jumlah
+                from lumbung l, lumbung_memiliki_produk lmp, produk p
+                where l.email = lmp.id_lumbung 
+                and lmp.id_produk = p.id 
+                and id_produk like 'PM%' 
+                and lmp.id_lumbung = '"""+email+"' order by id_produk""")
+        produk_makanan = namedtuplefetchall(cursor)
+        
+        argument = {
+            'hasil_panen' : hasil_panen,
+            'produk_hewan' : produk_hewan,
+            'produk_makanan' : produk_makanan,
+            'role' : role,
+            'roleAdmin' : roleAdmin,
+            'rolePengguna' : rolePengguna,
+            'level' : level,
+            'total' : total,
+            'kapasitas_maksimal' : kapasitas_maksimal,
+        }
+    cursor.close()
+    return render(request, "lumbung.html", argument)

@@ -5,6 +5,9 @@
     My Profile
 {% endblock title %}
 
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
 
 {% block content %}
 <div class="container justify-content-center align-items-center">
@@ -49,7 +52,7 @@
                   {% endif %}
                 </tbody>
             </table> 
-            <a href="{% url 'logout' %}" class="mybutton" role="button">Log Out</a>
+            <a href="{% url 'authentication:logout' %}" class="mybutton text-center" role="button">Log Out</a>
             </h5>
         </div>
     </div>

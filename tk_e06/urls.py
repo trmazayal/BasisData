@@ -16,18 +16,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from .views import create_pesanan, list_histori_hewan, list_histori_penjualan, list_pesanan, detail_histori_penjualan, detail_pesanan, create_histori_hewan, create_histori_penjualan, update_pesanan
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('login.urls')),
-    path('ListHistoriHewan/', list_histori_hewan, name='list_histori_hewan'),
-    path('CreateHistoriHewan/', create_histori_hewan, name='create_histori_hewan'),
-    path('ListHistoriPenjualan/', list_histori_penjualan, name='list_histori_penjualan'),
-    path('DetailHistoriPenjualan/<id_pesanan>', detail_histori_penjualan, name='detail_histori_penjualan'),
-    path('CreateHistoriPenjualan/', create_histori_penjualan, name='create_histori_penjualan'),
-    path('ListPesanan/', list_pesanan, name='list_pesanan'),
-    path('DetailPesanan/<id_pesanan>', detail_pesanan, name='detail_pesanan'),
-    path('CreatePesanan/', create_pesanan, name='create_pesanan'),
-    path('UpdatePesanan/', update_pesanan, name='create_update_pesanan'),
+    path('paket-koin/', include('paket_koin.urls')),
+    path('lumbung/', include('lumbung.urls')),
+    path('produk/', include('produk.urls')),
+    path('', include('histori.urls')),
 ]

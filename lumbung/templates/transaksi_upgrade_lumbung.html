@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Transaksi Upgrade Lumbung
+{% endblock title %}
+
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
+
+{% block content %}
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Transaksi Upgrade Lumbung</h1>
+    <div class="container-fluid">
+        <div class="col-md-8 offset-md-2 mt-5">
+              <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        {% if roleAdmin %}
+                        <th scope="col">Email Pengguna</th>
+                        {% endif %}
+                        <th scope="col">Waktu Upgrade</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in transaksi_upgrade_lumbung %}
+                  <tr class="table-striped">
+                    <td>{{forloop.counter}}</td>
+
+                    {% if roleAdmin %}
+                    <td>{{data.email}}</td>
+                    {% endif %}
+
+                    <td>{{data.waktu}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+            </table> 
+        </div>
+    </div>
+{% endblock content %}

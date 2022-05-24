@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    HI DAY | Detail Histori Penjualan
+{% endblock title %}
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
+{% block content %}
+    <center>
+        <br/>
+        <h1><b>Detail Histori Penjualan Pesanan</b></h1>
+        <br/>
+        {% if result %}
+        <table>
+            <body>
+                {% for detail in result %}
+                <br/>
+                <tr>
+                    <td>ID Pesanan: {{ detail.id }}</td>
+                    </tr>
+                <tr>
+                    <td>Nama Pesanan: {{ detail.pnama }}</td>
+                </tr>
+                <tr>
+                    <td>Jenis Pesanan: {{ detail.jenis }}</td>
+                </tr>
+                <tr>
+                    <td>Status Pesanan: {{ detail.status }}</td>
+                </tr>
+                {% endfor %}
+                <br/>
+                <tr>
+                    <td>Detail Pesanan:</td>
+                </tr>
+                <tr>
+                    <table border="3" width="35%">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nama Produksi</th>
+                                <th scope="col">Jumlah Produksi</th>
+                                <th scope="col">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <body>
+                        {% for pesanan in result %}
+                        <tr>
+                            <td>{{ pesanan.prnama }}</td>
+                            <td>{{ pesanan.jumlah }}</td>
+                            <td>{{ pesanan.subtotal }}</td>
+                        </tr>
+                        {% endfor %}
+                        </body>
+                    </table>
+                </tr>
+                <tr>Total Koin: {{ detail.total }}</tr>
+                <br/>
+                <tr>
+                    <ul><a href="#">[AMBIL]</ul>
+                </tr>
+            </body>
+        </table>
+        {% endif %}
+    </center>
+{% endblock content %}

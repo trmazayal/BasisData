@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    HI DAY | List Histori Penjualan
+{% endblock title %}
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
+{% block content %}
+    <center>
+        <h1><b>List Histori Penjualan</b></h1>
+        <br/>
+        {% if result %}
+        <table border="3" width="35%">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Email Pengguna</th>
+                    <th scope="col">Waktu Awal</th>
+                    <th scope="col">Waktu Selesai</th>
+                    <th scope="col">Jumlah</th>
+                    <th scope="col">XP</th>
+                    <th scope="col">Hewan</th>
+                </tr>
+            </thead>
+            <body>
+            {% for hewan in result %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ hewan.email }}</td>
+                <td>{{ hewan.waktu_awal }}</td>
+                <td>{{ hewan.waktu_selesai }}</td>
+                <td>{{ hewan.jumlah }}</td>
+                <td>{{ hewan.xp }}</td>
+                <td>{{ hewan.nama }}</td>
+            </tr>
+            {% endfor %}
+            </body>
+        </table>
+        {% else %}
+        <h3>Belum Ada Penjualan</h3>
+        {% endif %}
+    </center>
+{% endblock content %}
