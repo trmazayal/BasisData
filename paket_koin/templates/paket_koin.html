@@ -32,16 +32,18 @@
 
                     {% if rolePengguna %}
                     <td>
-                        <a href="{% url 'pembelian-paket-koin' %}" class="mybutton">Beli</a> 
+                        <a href="{% url 'pembelian-paket-koin' data.jumlah_koin %}" class="mybutton butwhite">Beli</a> 
                     </td> 
                     {% endif %}
 
                     {% if roleAdmin %}
                     <td>
-                        <a href="{% url 'ubah-paket-koin' %}" class="mybutton">Update</a>
+                        <a href="{% url 'ubah-paket-koin' data.jumlah_koin %}" class="mybutton butwhite">Update</a>
+                        {% if data.bisa_delete %}
                         <br>
                         <br>
-                        <a href="{% url 'paket-koin' %}" class="mybutton">Delete</a>
+                        <a href="{% url 'delete-paket-koin' data.jumlah_koin %}" class="mybutton butred">Delete</a>
+                        {% endif %}
                     </td> 
                     {% endif %}
                   </tr>
@@ -50,14 +52,4 @@
             </table> 
         </div>
     </div>
-
-<script>
-    function updateForm() {
-        var x = document.forms["myForm"]["fname"].value;
-        if (x == "" || x == null) {
-            alert("Name must be filled out");
-            return false;
-        }
-    }
-</script>
 {% endblock content %}

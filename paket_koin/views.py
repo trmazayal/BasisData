@@ -1,12 +1,16 @@
-from email import message
 from django.shortcuts import render, redirect
 from django.db import connection
 from collections import namedtuple
+import datetime
 
-# jk_update = 0;
+from paket_koin.forms import BeliPaketKoinForm, BuatPakerKoinForm, UpdatePaketKoinForm
 
-# def setUpdatePaketKoin(int):
-#     jk_update = int
+
+def get_input_paket_koin(request):
+    input = request.POST
+    jumlah_koin = input['jumlah_koin']
+    harga = input['harga']
+    return [jumlah_koin, harga]
 
 def namedtuplefetchall(cursor):
     "Return all rows from a cursor as a namedtuple"
@@ -34,10 +38,16 @@ def paket_koin(request):
         email = request.session['email']
     except Exception as e:
         return redirect('/')
+
     cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
-
-    cursor.execute("select * from paket_koin")
+    cursor.execute("""select jumlah_koin, harga,
+                        case
+                            when not exists(select distinct pk.jumlah_koin from transaksi_pembelian_koin tpk where tpk.paket_koin = jumlah_koin)
+                            then 1 else 0 
+                            end as bisa_delete
+                        from paket_koin pk
+                        order by jumlah_koin asc""")
     data_paket_koin = namedtuplefetchall(cursor)
 
     role = cekRole(email)
@@ -97,71 +107,97 @@ def transaksi_pembelian_koin(request):
     cursor.close()
     return render(request, "transaksi_pembelian_koin.html", argument)
 
+def form_buat_paket_koin(request):
+    if request.method =='POST':
+        input = get_input_paket_koin(request)
+        
+        cursor = connection.cursor()
+        cursor.execute("set search_path to hiday")
+
+        
+        try :
+            cursor.execute("insert into paket_koin values ('"+input[0]+"','"+input[1]+"')")
+            cursor.close()
+            return redirect('/paket-koin/')
+        except:
+            return redirect('/paket-koin/')
+
+    return redirect('/paket-koin/')
 
 def buat_paket_koin(request):
-    try:
-        email = request.session['email']
-    except Exception as e:
-        return redirect('/')
-
-    cursor = connection.cursor()
-    cursor.execute("set search_path to hiday")
-
-    role = cekRole(email)
-
-    if (role == 'Pengguna'):
-        # return redirect('/')
-        ayam = ''
-
     argument = {
-        # 'form' : buatPaketKoinForm,
-    }
-    cursor.close()
+        'form': BuatPakerKoinForm(),
+        }
     return render(request, "buat_paket_koin.html", argument)
 
-def ubah_paket_koin(request):
-    try:
-        email = request.session['email']
-    except Exception as e:
-        return redirect('/')
+def delete_paket_koin(request, jumlah_koin):
+    cursor = connection.cursor()
+    cursor.execute("set search_path to hiday")
+    cursor.execute("delete from paket_koin where jumlah_koin ='"+ jumlah_koin + "'")
+    cursor.execute("select * from paket_koin order by jumlah_koin asc")
+    hasil = namedtuplefetchall(cursor)
+    cursor.close()
+    return redirect('/paket-koin/')
+
+def update_paket_koin(request): #form
+    jumlah_koin = request.POST['jumlah_koin']
+    harga = request.POST['harga']
 
     cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
+    
+    cursor.execute("update paket_koin set jumlah_koin = '" + jumlah_koin + "',  harga = '" +  harga + "' where jumlah_koin = '"+ jumlah_koin +"'")
 
-    role = cekRole(email)
+    return redirect('/paket-koin/')
 
-    if (role == 'Pengguna'):
-        ayam = ''
-        # return redirect('/')
+def ubah_paket_koin(request, jumlah_koin):
+    cursor = connection.cursor()
+    cursor.execute("set search_path to hiday")
+    cursor.execute("select * from paket_koin where jumlah_koin ='"+ jumlah_koin + "'")
+    hasil= namedtuplefetchall(cursor)
+    jumlah_koin_u = hasil[0].jumlah_koin
+    harga = hasil[0].harga
+    
+    form = UpdatePaketKoinForm(initial={'jumlah_koin': jumlah_koin_u, 'harga': harga})
 
     argument = {
-        # 'form' : ubahPaketKoinForm,
+        'form' : form,
     }
     cursor.close()
     return render(request, "ubah_paket_koin.html", argument)
 
+def form_beli_paket_koin(request):
+    email = request.session['email']
 
-# dia bakal ambil dlu jumlh koin
-# diset, trs diupdate
+    if request.method =='POST':
+        paket_koin_f = request.POST['paket_koin']
+        jumlah = request.POST['jumlah']
+        cara_pembayaran = request.POST['cara_pembayaran']
+        ct = datetime.datetime.now()
+        date_time = ct.strftime("%Y-%m-%d %H:%M:%S")
+        total = "0"
 
-def pembelian_paket_koin(request):
-    # admin gabisa beli
-    try:
-        email = request.session['email']
-    except Exception as e:
-        return redirect('/')
+        cursor = connection.cursor()
+        cursor.execute("set search_path to hiday")
+        try:
+            cursor.execute("insert into transaksi_pembelian_koin values ('"+ email +"','"+ date_time +"','"+ str(jumlah) +"','"+ str(cara_pembayaran) +"','"+ paket_koin_f +"','" + total + "')")
+            cursor.close()
+        except:
+            return redirect('/paket-koin/transaksi-pembelian-koin')
 
+    return redirect('/paket-koin/transaksi-pembelian-koin/')
+
+def pembelian_paket_koin(request, jumlah_koin):
     cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
 
-    role = cekRole(email)
-    if (role == 'Admin'):
-        ayam =''
-        # return redirect('/')
-
-
+    cursor.execute("select * from paket_koin where jumlah_koin ='"+ jumlah_koin + "'")
+    hasil= namedtuplefetchall(cursor)
+    jumlah_koin = hasil[0].jumlah_koin
+    harga = hasil[0].harga
+    
+    form = BeliPaketKoinForm(initial={'paket_koin': jumlah_koin, 'harga': harga})
     argument = {
-        # 'form' : pembelianPaketKoinForm,
-    }
-    cursor.close()
+        'form': form,
+        }
     return render(request, "pembelian_paket_koin.html", argument)

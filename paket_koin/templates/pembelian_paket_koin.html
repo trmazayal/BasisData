@@ -10,40 +10,16 @@
 {% endblock meta%}
 
 {% block content %}
-<script>
-    function validateForm() {
-        var x = document.forms["myForm"]["jumlah"].value;
-        var y = document.forms["myForm"]["cara_bayar"].value;
-        if (x == "" || x == null || y == "" || y == null) {
-            alert("Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu");
-            return false;
-        }
-    }
-</script>
-<div class="container justify-content-center align-items-center">
-  <h1 class="list_title">Form Pembelian Paket Koin</h1>
-    <div class="container-fluid">
-        <div class="col-md-8 offset-md-2 mt-5">
-              
-              <form class="was-validated" name="myForm" onsubmit="return validateForm()" action="/paket-koin/transaksi-pembelian-koin/">
-                <div class="mb-3">
-                    <label for="validationTextarea">Paket Koin</label>
-                    <input type="number" placeholder="100" disabled>
-                  </div>
-                  <div class="mb-3">
-                    <label for="validationTextarea">Harga</label>
-                    <input type="number" placeholder="15000" disabled>
-                  </div>
-                <div class="mb-3">
-                    <label for="validationTextarea">Jumlah</label>
-                    <input type="number" name="jumlah">
-                  </div>
-                <div class="mb-3">
-                  <label for="validationTextarea">Cara Pembayaran</label>
-                  <input type="" name="cara_bayar">
-                </div>
-                <input type="submit" value="Beli" name="tombol" class="mybutton">
-              </form>
-        </div>
-    </div>
+<h1 class="list_title">Form Pembelian Paket Koin</h1>
+<div class="row mainRow align-items-center justify-content-center">
+  <div class="login">      
+    <form  name="myForm" method="POST" id="all-input" action="/paket-koin/form-beli-paket-koin/" method="post" required>
+      {% csrf_token %}
+        {% for form in form.visible_fields %}
+          <div class="loginForm" id="all-input">{{ form.label_tag }} {{ form }}</div>
+        {% endfor %}
+      <input type="submit" value="Beli" name="tombol" class="mybutton">
+    </form>
+  </div>
+</div>
 {% endblock content %}
