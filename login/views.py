@@ -48,7 +48,7 @@ def login(request):
                         select email, password
                         from admin
                         ) as result
-                        where akun.email = result.email and  result.email='"""+email+"' and result.password='"+password+"'")
+                        where akun.email = result.email and  result.email= %s and result.password= %s""", [email, password])
      
     hasil = namedtuplefetchall(cursor)
     role = cekRole(email)
@@ -92,7 +92,7 @@ def profil(request):
         return redirect('/')
     cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
-    cursor.execute("select * from akun where email='"+email+"'")
+    cursor.execute("select * from akun where email= %s", [email])
     pengguna = namedtuplefetchall(cursor)
 
     role = cekRole(email)
@@ -104,7 +104,7 @@ def profil(request):
         rolePengguna = True
         
     if (roleAdmin):
-        cursor.execute("select * from admin where email='"+email+"'")
+        cursor.execute("select * from admin where email= %s", [email])
         admin = namedtuplefetchall(cursor)
         email = admin[0].email
 
@@ -116,7 +116,7 @@ def profil(request):
             'rolePengguna' : rolePengguna
         }
     elif (rolePengguna):
-        cursor.execute("select * from pengguna where email='"+email+"'")
+        cursor.execute("select * from pengguna where email= %s", [email])
         pengguna = namedtuplefetchall(cursor)
         email = pengguna[0].email
         nama_area_pertanian = pengguna[0].nama_area_pertanian
@@ -142,13 +142,13 @@ def profil(request):
 def cekRole(email):
     cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
-    cursor.execute("select * from admin where email='"+email+"'")
+    cursor.execute("select * from admin where email= %s", [email])
     admin = namedtuplefetchall(cursor)
     if (admin != []):
         cursor.close()
         return "Admin"
     else:
-        cursor.execute("select * from pengguna where email='"+email+"'")
+        cursor.execute("select * from pengguna where email= %s", [email])
         pengguna = namedtuplefetchall(cursor)
         if (pengguna != []):
             cursor.close()
@@ -196,18 +196,17 @@ def insertAdmin(request):
 
     cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
-    cursor.execute("select * from akun where email='"+email+"'")
+    cursor.execute("select * from akun where email= %s", [email])
     hasil = namedtuplefetchall(cursor)
     if (hasil == []):
-        cursor.execute("insert into akun values ('"+email+"')")
-        cursor.execute("insert into admin values ('"+email+"','"+password+"')")
+        cursor.execute("insert into akun values (%s)", [email])
+        cursor.execute("insert into admin values (%s, %s)", [email, password])
         
     else:
         cursor.close()
         return registerPenggunaRole(request, "Email sudah digunakan", 'Admin')
             
-                
-    cursor.execute("select * from admin where email='"+email+"' and password='"+password+"'")
+    cursor.execute("select * from admin where email= %s and password= %s", [email, password])
     hasil = namedtuplefetchall(cursor)
 
     if (hasil == []):
@@ -217,7 +216,7 @@ def insertAdmin(request):
         cursor.execute("set search_path to public")
         request.session['email'] = hasil[0].email
         request.session['password'] = hasil[0].password
-        request.session.set_expiry(1800)
+        request.session.set_expiry(0)
         request.session['role'] = 'Admin'
         argument = {
             'nama_akun' : email.split("@", 1)[0],
@@ -240,16 +239,15 @@ def insertPengguna(request):
     cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
 
-    cursor.execute("select * from akun where email='"+email+"'")
+    cursor.execute("select * from akun where email= %s", [email])
     hasil = namedtuplefetchall(cursor)
     if (hasil != []):
         cursor.close()
         return registerPenggunaRole(request, "Email sudah digunakan", "Pengguna")
     
-    cursor.execute("insert into akun values ('"+email+"')")
-    cursor.execute("insert into pengguna values ('"+email+"','"+password+"','"+nama_area_pertanian+"','"+xp+"','"+koin+"','"+level+"')")
-                
-    cursor.execute("select * from pengguna where email='"+email+"' and password='"+password+"'")
+    cursor.execute("insert into akun values ( %s )", [email])
+    cursor.execute("insert into pengguna values ( %s, %s, %s, %s, %s, %s)", [email, password, nama_area_pertanian, xp, koin, level])    
+    cursor.execute("select * from pengguna where email= %s and password= %s", [email, password])
     hasil = namedtuplefetchall(cursor)
 
     if (hasil == []):
@@ -263,7 +261,7 @@ def insertPengguna(request):
         request.session['xp'] = 0
         request.session['koin'] = 0
         request.session['level'] = 1
-        request.session.set_expiry(1800)
+        request.session.set_expiry(0)
         request.session['role'] = 'Pengguna'
         argument = {
             'nama_akun' : email.split("@", 1)[0],
@@ -275,13 +273,15 @@ def insertPengguna(request):
         return render(request, "home.html", argument)
     
 def lihatIsiLumbung(request):
+    cursor = connection.cursor()
+    cursor.execute("set search_path to public")
     try:
         email = request.session['email']
     except Exception as e:
         return redirect('/')
     cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
-    cursor.execute("select * from akun where email='"+email+"'")
+    cursor.execute("select * from akun where email= %s", [email])
     pengguna = namedtuplefetchall(cursor)
 
     role = cekRole(email)
@@ -293,7 +293,7 @@ def lihatIsiLumbung(request):
         rolePengguna = True
         
     if (roleAdmin):
-        cursor.execute("select * from admin where email='"+email+"'")
+        cursor.execute("select * from admin where email= %s", [email])
         admin = namedtuplefetchall(cursor)
         email = admin[0].email
 
@@ -329,13 +329,14 @@ def lihatIsiLumbung(request):
         }
     
     elif (rolePengguna):
-        cursor.execute("select * from pengguna where email='"+email+"'")
+        cursor.execute("select * from pengguna where email= %s", [email])
         pengguna = namedtuplefetchall(cursor)
         email = pengguna[0].email
         
         cursor.execute("""select level, total , kapasitas_maksimal 
                        from lumbung where email='"""
                        +email+"'")
+        cursor.execute("select level, total , kapasitas_maksimal from lumbung where email= %s", [email])
         lumbung = namedtuplefetchall(cursor)
         level = lumbung[0].level
         total = lumbung[0].total
