@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import create_pesanan, list_histori_hewan, list_histori_penjualan, list_pesanan, detail_histori_penjualan, detail_pesanan, create_histori_hewan, create_histori_penjualan, update_pesanan
 app_name='histori'
+
 urlpatterns = [
     path('ListHistoriHewan/', list_histori_hewan, name='list_histori_hewan'),
     path('CreateHistoriHewan/', create_histori_hewan, name='create_histori_hewan'),
@@ -28,7 +29,7 @@ urlpatterns = [
     path('DetailPesanan/<id_pesanan>', detail_pesanan, name='detail_pesanan'),
     path('CreatePesanan/', create_pesanan, name='create_pesanan'),
     path('UpdatePesanan/', update_pesanan, name='create_update_pesanan'),
-]    
+]
     
     
     

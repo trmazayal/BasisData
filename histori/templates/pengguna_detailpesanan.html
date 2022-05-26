@@ -10,12 +10,11 @@
 {% block content %}
     <center>
         <br/>
-        <h1><b>Detail Histori Penjualan Pesanan</b></h1>
+        <h1><b>Detail Pesanan</b></h1>
         <br/>
-        {% if result %}
         <table>
             <body>
-                {% for detail in result %}
+                {% for detail in result1 %}
                 <br/>
                 <tr>
                     <td>ID Pesanan: {{ detail.id }}</td>
@@ -29,7 +28,6 @@
                 <tr>
                     <td>Status Pesanan: {{ detail.status }}</td>
                 </tr>
-                {% endfor %}
                 <br/>
                 <tr>
                     <td>Detail Pesanan:</td>
@@ -44,7 +42,7 @@
                             </tr>
                         </thead>
                         <body>
-                        {% for pesanan in result %}
+                        {% for pesanan in result2 %}
                         <tr>
                             <td>{{ pesanan.prnama }}</td>
                             <td>{{ pesanan.jumlah }}</td>
@@ -54,13 +52,13 @@
                         </body>
                     </table>
                 </tr>
-                <tr>Total Koin: {{ detail.total }}</tr>
+                <tr>Total Koin: {{ detail.koin }}</tr>
                 <br/>
+                {% endfor %}
                 <tr>
-                    <ul><a href="#">[AMBIL]</ul>
+                    <button class="btn btn-success"><a href="#">[AMBIL]</button>
                 </tr>
             </body>
         </table>
-        {% endif %}
     </center>
 {% endblock content %}
