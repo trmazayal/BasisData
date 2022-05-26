@@ -61,7 +61,7 @@ def login(request):
     else:
         request.session['email'] = hasil[0].email
         request.session['password'] = hasil[0].password
-        request.session.set_expiry(1800)
+        request.session.set_expiry(86400)
         request.session['role'] = role
         argument = {
             'nama_akun' : email.split("@", 1)[0],

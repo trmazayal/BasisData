@@ -1,25 +1,10 @@
 from django import forms
 
-BIBIT_CHOICES = [
-    ('padi', 'Padi'),
-    ('jagung', 'Jagung'),
-    ('tebu', 'Tebu'),
-    ('wortel', 'Wortel'),
-    ('stroberi', 'Stroberi'),
-]
-
 class upgradeLumbungForm(forms.Form):
-    level_lumbung = forms.IntegerField(label = 'Level Lumbung')
-    kapasitas_lumbung = forms.IntegerField(label='Kapasitas Lumbung')
-    biaya_upgrade = forms.CharField(
-    required=False,
-    widget=forms.TextInput(attrs={'readonly': True, 'value': '200'}),)
+    level_lumbung = forms.CharField(label='Level Lumbung', required=True, widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    kapasitas_lumbung = forms.CharField(label='Kapasitas Lumbung', required=True, widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    biaya_upgrade  = forms.CharField(label='Biaya Upgrade ', required=True, widget=forms.TextInput(attrs={'placeholder':'*Required'}))
 
 class produksiTanamanForm(forms.Form):
-    bibit_tanaman = forms.CharField(label='Bibit Tanaman', 
-    widget=forms.Select(choices=BIBIT_CHOICES))
-    # Role = forms.ChoiceField(choices=BIBIT_CHOICES, widget=forms.RadioSelect)
-    jumlah = forms.IntegerField(label = 'Jumlah')
-    xp = forms.CharField(
-    required=False,
-    widget=forms.TextInput(attrs={'readonly': True, 'value': '5'}),)
+    jumlah = forms.CharField(label='Jumlah', required=True, widget=forms.TextInput(attrs={'placeholder':'*Required'}))
+    xp = forms.CharField(label='XP', required=True, widget=forms.TextInput(attrs={'readonly':'readonly'}))

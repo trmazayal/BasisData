@@ -1,26 +1,22 @@
-# from multiprocessing.sharedctypes import Value
-# from django import forms
+from multiprocessing.sharedctypes import Value
+from django import forms
+
+class BuatPakerKoinForm(forms.Form):
+    jumlah_koin = forms.IntegerField(label='Jumlah Koin', required=True, widget=forms.TextInput(attrs={'placeholder':'*Required',
+    'oninvalid' : "alert('Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu')"}))
+    harga = forms.IntegerField(label='Harga', required=True, widget=forms.TextInput(attrs={'placeholder':'*Required',
+    'oninvalid' : "alert('Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu')"}))
+
+class UpdatePaketKoinForm(forms.Form):
+    jumlah_koin = forms.IntegerField(label='Jumlah Koin', required=True, widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    harga = forms.IntegerField(label='Harga', required=True, widget=forms.TextInput(attrs={'placeholder':'*Required',
+    'oninvalid' : "alert('Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu')"}))
 
 
-# class buatPaketKoinForm(forms.Form):
-#     jumlah_koin = forms.IntegerField(label = 'Jumlah Koin')
-#     harga = forms.IntegerField(label='Harga')
-
-# class ubahPaketKoinForm(forms.Form):
-#     jumlah_koin = forms.CharField(
-#     required=False,
-#     widget=forms.TextInput(attrs={'readonly': True, 'value': '100'}),
-#     )
-#     harga = forms.IntegerField(label='Harga')
-
-# class pembelianPaketKoinForm(forms.Form):
-#     paket_koin = forms.CharField(
-#     required=False,
-#     widget=forms.TextInput(attrs={'readonly': True, 'value': '100'}),
-#     )
-#     harga= forms.CharField(
-#     required=False,
-#     widget=forms.TextInput(attrs={'readonly': True, 'value': '15000'}),
-#     )
-#     jumlah = forms.IntegerField(label='Jumlah')
-#     bayar = forms.CharField(label='Cara Pembayaran')
+class BeliPaketKoinForm(forms.Form):
+    paket_koin = forms.IntegerField(label='Paket Koin', required=True, widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    harga = forms.IntegerField(label='Harga', required=True, widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    jumlah = forms.IntegerField(label='Jumlah', required=True, widget=forms.TextInput(attrs={'placeholder':'*Required',
+    'oninvalid' : "alert('Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu')"}))
+    cara_pembayaran = forms.CharField(max_length=50, label='Cara Pembayaran', required=True, widget=forms.TextInput(attrs={'placeholder':'*Required', 
+    'oninvalid' : "alert('Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu')"}))
