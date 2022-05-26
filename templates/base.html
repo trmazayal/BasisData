@@ -17,7 +17,7 @@
 <body>
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'authentication:home' %}">
+      <a class="navbar-brand" href="{% url 'authentication:index' %}">
         <img src="{% static 'images/favicon.png' %}" height="32px" alt="" class="d-inline-block align-top">
           <b class="my-auto">HI DAY!</b>
       </a>
@@ -130,7 +130,7 @@
                   <a class="dropdown-item" href="{% url 'histori:list_histori_hewan' %}">List Histori Produksi Hewan</a>
                   <a class="dropdown-item" href="{% url 'produksi-tanaman' %}">Produksi Tanaman</a>    
                   <a class="dropdown-item" href="{% url 'histori-produksi-tanaman' %}">List Histori Produksi Tanaman</a>
-                  <a class="dropdown-item" href="#">Produksi Produk Makanan</a>   
+                  <a class="dropdown-item" href="{% url 'produk:createHistoriProduksiMakanan' %}">Produksi Produk Makanan</a>   
                   <a class="dropdown-item" href="{% url 'produk:historiProduksiMakanan' %}">List Histori Produksi Makanan</a> 
                 </div>
               </li>

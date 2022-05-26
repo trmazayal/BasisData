@@ -21,7 +21,7 @@ from .views import index, login, register, registerPenggunaRole, insertAdmin, pr
 app_name = 'authentication'
 
 urlpatterns = [
-    path('', index, name='login'),
+    path('', index, name='index'),
     path('Profil/', profil, name='profil'),
     path('LihatIsiLumbung/', lihatIsiLumbung, name='lihatIsiLumbung'),
     path('Logout/', logout,  name='logout'),
@@ -29,5 +29,6 @@ urlpatterns = [
     path('Register/', register),
     path('RegisterRole/', registerPenggunaRole),
     path('insertAdmin/', insertAdmin),
+    path('insertPengguna/', insertPengguna),
     
 ]

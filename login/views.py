@@ -10,7 +10,10 @@ def namedtuplefetchall(cursor):
     return [nt_result(*row) for row in cursor.fetchall()]
 
 def index(request, validasi = None):
+    cursor = connection.cursor()
+    cursor.execute("set search_path to public")
     try:
+        email = request.session['email']
         return login(request)
     except KeyError:
         formulir = LoginForm()
@@ -24,6 +27,8 @@ def index(request, validasi = None):
         return render(request, 'login.html', argument)
     
 def login(request):
+    cursor = connection.cursor()
+    cursor.execute("set search_path to public")
     try:
         email = request.session['email']
         password = request.session['password']
@@ -61,8 +66,9 @@ def login(request):
     else:
         request.session['email'] = hasil[0].email
         request.session['password'] = hasil[0].password
-        request.session.set_expiry(1800)
         request.session['role'] = role
+        request.session.set_expiry(0)
+        request.session.modified = True
         argument = {
             'nama_akun' : email.split("@", 1)[0],
             'email' : email,
@@ -78,6 +84,8 @@ def logout(request):
     return index(request)
 
 def profil(request):
+    cursor = connection.cursor()
+    cursor.execute("set search_path to public")
     try:
         email = request.session['email']
     except Exception as e:
