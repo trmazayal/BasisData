@@ -6,23 +6,9 @@ from .forms import UpdateProdukForm, UpdateProduksiForm
 
 # Create your views here.
 def namedtuplefetchall(cursor):
-    "Return all rows from a cursor as a namedtuple"
     desc = cursor.description
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
-
-def max_index(id, relation):
-    cursor = connection.cursor()
-    cursor.execute("set search_path to hiday")
-    cursor.execute("select "+ id + " from " + relation + " order by " + id +"::int")
-    result = namedtuplefetchall(cursor)
-    idx = []
-    for a in result:
-        result_string = str(a).split('=')
-        idx_string = result_string[1][1:-2]
-        idx.append(int(idx_string))
-    cursor.close()
-    return idx[-1]
 
 # Input Produk
 def get_input_produk(request):
