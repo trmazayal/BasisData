@@ -16,7 +16,7 @@
 
     <div class="row justify-content-center">
         {% if roleAdmin %}
-        <a href="{% url 'produk:createProduksi' %}" class="mybutton" role="button" style="margin-bottom: 30px;">Create Item</a>
+        <a href="{% url 'produk:createProduksi' %}" class="mybutton" role="button" style="margin-bottom: 30px;">Buat Produksi</a>
         {% endif %}
         <table class="table table-hover table-striped text-center">
             <thead>
@@ -41,7 +41,6 @@
                 <td>{{row.alat_produksi}}</td>
                 <td>{{row.durasi}}</td>
                 <td>{{row.jumlah_unit_hasil}}</td>
-                {% comment %} <td><a  class="btn btn-outline-success" style="" role="button">DETAIL</a></td> {% endcomment %}
                 <!-- Modal -->
                 <td><button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#{{row.id_produk_makanan}}Modal">
                     DETAIL
@@ -78,8 +77,7 @@
                     </div>
                 </div>
                 {% if roleAdmin %}
-                <!-- belum selesai -->
-                <td><a  class="mybutton butwhite" role="button">EDIT</a></td>
+                    <td><a  href="{% url 'produk:formUpdateProduksi' row.id_produk_makanan %}" class="mybutton butwhite" role="button">EDIT</a></td>
                     {% if row.can_delete %}
                         <td><a href="{% url 'produk:deleteProduksi' row.id_produk_makanan %}" class="mybutton butred" role="button">DELETE</a></td>
                     {% endif %}

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import viewsProduk,viewsProduksi,viewsHistoriProduksiMakanan, createProduk, updateProduk, formUpdateProduk, deleteProduk, createProduksi,deleteProduksi
+from .views import formUpdateProduksi, updateProduksi, viewsProduk,viewsProduksi,viewsHistoriProduksiMakanan, createProduk, updateProduk, formUpdateProduk, deleteProduk, createProduksi,deleteProduksi, createHistoriProduksiMakanan
 
 app_name ='produk'
 
@@ -13,11 +13,11 @@ urlpatterns = [
      
     path('form_create_produksi/', createProduksi, name='createProduksi'),
     path('read_produksi/', viewsProduksi, name='produksi'),
-    # path('form_update_produksi/<str:id>/', formUpdateProduksi, name='formUpdateProduksi'),
-    # path('update_produk/', updateProduksi, name='updateProduksi'),
+    path('form_update_produksi/<str:id>/', formUpdateProduksi, name='formUpdateProduksi'),
+    path('update_produksi/', updateProduksi, name='updateProduksi'),
     path('delete_produksi/<str:id>/', deleteProduksi, name='deleteProduksi'),
     
-    # path('form_create_histori_produksi_makanan/', createHistoriProduksiMakanan, name='createHistoriProduksiMakanan'),
+    path('form_create_histori_produksi_makanan/', createHistoriProduksiMakanan, name='createHistoriProduksiMakanan'),
     path('read_histori_produksi_makanan/', viewsHistoriProduksiMakanan, name='historiProduksiMakanan'),
     
 ]

@@ -17,21 +17,22 @@
     var harga_jual = document.forms["myForm"]["harga_jual"].value;
     var sifat_produk = document.forms["myForm"]["sifat_produk"].value;
     if (nama == "" ) {
-      alert("“Nama harus diisi”");
+      alert_message.innerHTML = "Nama Produk tidak boleh kosong";
       return false;
     }
     if (harga_jual == "" ) {
-      alert("“Harga Jual harus diisi”");
+      alert_message.innerHTML = "Harga Jual tidak boleh kosong";
       return false;
     }
     if (sifat_produk == "" ) {
-      alert("“Sifat Produk harus diisi”");
+      alert_message.innerHTML = "Sifat Produk tidak boleh kosong";
       return false;
     }
   }
 </script>
 <div class="container justify-content-center align-items-center">
-  <h1 class="list_title">Create Produk</h1>
+  <h1 class="list_title">FORM BUAT PRODUK</h1>
+  <div id="alert_message" style="text-align: center; color: #303030;  font-size: 24px; margin-bottom: 30px; color: #ED6868;" class="container-fluid"></div>
   <h2 class="message">{{message}}</h2>
   <br>
   <div class="row justify-content-center">
@@ -48,8 +49,7 @@
         </select>
 
         <br>
-
-        {% comment %} <div class="loginForm" name="formProduk">{{ form.as_p }}</div> {% endcomment %}
+        
         <div>
           <label class="label" id="nama" name="nama">Nama:</label><br>
           <input type="text" id="nama" name="nama" placeholder="*Required">
@@ -63,9 +63,8 @@
           <input type="text" id="sifat_produk" name="sifat_produk" placeholder="*Required">
         <br>
           </div>
-        <input type="submit" value="Create" name="tombol">
+        <input type="submit" class="mybutton" value="TAMBAHKAN" name="tombol">
       </form>
-      <p class="text--center" style="color: white;background-color: grey;border-radius: 7px;">{{message}}</p>
     </div>
   </div>
 </div>

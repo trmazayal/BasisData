@@ -25,7 +25,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto my-2 my-lg-0">
+          <ul class="navbar-nav mr-auto">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Lumbung
@@ -149,10 +149,15 @@
 
                 </div>
               </li>
-      <div class="row justify-items-end">
-        <div style="width: 20px;"></div>
-        <a href="{% url 'authentication:logout' %}" class="mybutton">Log Out</a>
-      </div>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'authentication:profil' %}">Profile</a>
+              </li>
+              <div class="my-2 my-sm-0">
+                  <a href="{% url 'authentication:logout' %}">
+                    <button class="mybutton" >Logout</button>
+                  </a>
+                </div>
+
     </div>
   </nav>
   <nav></nav>

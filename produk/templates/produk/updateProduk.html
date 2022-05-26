@@ -11,19 +11,19 @@
 
 {% block content %}
 <div class="container justify-content-center align-items-center">
-  <h1 class="list_title">Update Produk</h1>
+  <h1 class="list_title">UBAH PRODUK</h1>
   <h2 class="message">{{message}}</h2>
 
     <div class="row mainRow align-items-center justify-content-center">
       <div class="login">      
-        <h2>Update Produk</h2>
+        <h2>FORM UBAH PRODUK</h2>
         <br>
-        <form  method="POST" action="/produk/update_produk/">
+        <form  method="POST" action="{% url 'produk:updateProduk' %}">
           {% csrf_token %}
           {% for field in form.visible_fields %}
             <div class="loginForm">{{ field.label_tag }} {{ field }}</div>
           {% endfor %}
-          <input type="submit" value="Update" name="tombol" class="mybutton">
+          <input type="submit" value="SIMPAN" name="tombol" class="mybutton">
         </form>
       </div>
     </div>

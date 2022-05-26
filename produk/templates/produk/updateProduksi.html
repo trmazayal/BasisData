@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Update Produksi
+{% endblock title %}
+
+{% block meta%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock meta%}
+
+{% block content %}
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">UBAH PRODUKSI</h1>
+  <h2 class="message">{{message}}</h2>
+
+    <div class="row mainRow align-items-center justify-content-center">
+      <div class="login">      
+        <h2>FORM UBAH PRODUKSI</h2>
+        <br>
+        <form  method="POST" action="{% url 'produk:updateProduksi' %}">
+          {% csrf_token %}
+          {% for field in form.visible_fields %}
+            <div class="loginForm">{{ field.label_tag }} {{ field }}</div>
+          {% endfor %}
+          <b>Daftar Bahan yang Dibutuhkan: </b><br>
+            <div class="loginForm">
+                <table class="table table-striped">
+                <thead>
+                    <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Bahan</th>
+                    <th scope="col">Jumlah</th>
+                    </tr>
+                </thead>
+                <tbody style="color:#c9c9c9;">
+                    {% for bahan in daftar_bahan %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{bahan.nama}}</td>
+                        <td>{{bahan.jumlah}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div>
+          <input type="submit" value="Update" name="tombol" class="mybutton">
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

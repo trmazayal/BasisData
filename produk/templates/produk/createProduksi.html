@@ -42,27 +42,28 @@
     var durasi = document.forms["myForm"]["durasi"].value;
     var jumlah_produk_hasil = document.forms["myForm"]["jumlah_produk_hasil"].value;
     var bahan1 = document.forms["myForm"]["bahan1"].value;
-    var jumalah1 = document.forms["myForm"]["jumlah1"].value;
+    var jumlah1 = document.forms["myForm"]["jumlah1"].value;
     if (durasi == "" ) {
-        alert("Durasi harus diisi");
+        alert_message.innerHTML = "Durasi tidak boleh kosong";
         return false;
     }
     if (jumlah_produk_hasil == "" ) {
-        alert("Jumlah Produk Hasil harus diisi");
+        alert_message.innerHTML = "Jumlah Produk Hasil tidak boleh kosong";
         return false;
     }
     if (bahan1 == "" ) {
-        alert("Bahan harus diisi");
+        alert_message.innerHTML = "Bahan tidak boleh kosong";
         return false;
     }
-    if (jumalah1 == "" ) {
-        alert("Jumlah harus diisi");
+    if (jumlah1 == "" ) {
+        alert_message.innerHTML = "Jumlah tidak boleh kosong";
         return false;
     }
   }
 </script>
 <div class="container justify-content-center align-items-center">
-  <h1 class="list_title">Create Produksi</h1>
+  <h1 class="list_title">FORM BUAT PRODUKSI</h1>
+  <div id="alert_message" style="text-align: center; color: #303030;  font-size: 24px; margin-bottom: 30px; color: #ED6868;" class="container-fluid"></div>
   <h2 class="message">{{message}}</h2>
   <br>
   <div class="row justify-content-center">
@@ -111,9 +112,8 @@
         </div>    
         <button type="button" class="mybutton butwhite" onclick="addNew()">Add</button>
         <button type="button" class="mybutton butred" onclick="removeLastElem()">Remove</button>
-        <input type="submit" value="Create" name="tombol">
+        <input type="submit" value="TAMBAHKAN" name="tombol" class="mybutton">
       </form>
-      <p class="text--center" style="color: white;background-color: grey;border-radius: 7px;">{{message}}</p>
     </div>
   </div>
 </div>
