@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Read Koleksi Aset
+{% endblock title %}
+
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+    <title>HI DAY | Lihat Koleksi Aset
+    </title>
+</head>
+<body>
+<h1 class="list_title">Menu Lihat Koleksi Aset</h1>
+<div class="container justify-content-center align-items-center">
+  <div style="text-align:center">
+    <a class="btn btn-primary" style="margin:10px;" href="{% url 'koleksi_aset:dekorasi' %}">Dekorasi</a>
+  </div>
+  <div style="text-align:center">
+    <a class="btn btn-primary" style="margin:10px;" href="{% url 'koleksi_aset:bibit_tanaman' %}">Bibit Tanaman</a>
+  </div>
+  <div style="text-align:center">
+    <a class="btn btn-primary" style="margin:10px;" href="{% url 'koleksi_aset:kandang' %}">Kandang</a>
+  </div>
+  <div style="text-align:center">
+    <a class="btn btn-primary" style="margin:10px;" href="{% url 'koleksi_aset:hewan' %}">Hewan</a>
+  </div>
+  <div style="text-align:center">
+    <a class="btn btn-primary" style="margin:10px;" href="{% url 'koleksi_aset:alat_produksi' %}">Alat Produksi</a>
+  </div>
+  <div style="text-align:center">
+    <a class="btn btn-primary"style="margin:10px;" href="{% url 'koleksi_aset:petak_sawah' %}">Petak Sawah</a>
+  </div>
+</div>
+</body>
+{% endblock content %}

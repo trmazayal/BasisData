@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Buat Transaksi Pembelian Aset
+{% endblock title %}
+
+
+{% block content %}
+<script>
+    function validateForm() {
+        var x = document.forms["myForm"]["aset"].value;
+        var y = document.forms["myForm"]["jumlah"].value;
+        if (x == "" || x == null || y == "" || y == null) {
+            alert("Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu");
+            return false;
+        }
+    }
+</script>
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Form Buat Transaksi Pembelian Aset</h1>
+    <div class="container-fluid">
+        <div class="col-md-8 offset-md-2 mt-5">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="validationTextarea">Detail Aset:</label>
+                    <select name="aset">
+                      {%for row in aset %}
+                      <option value='{{row.nama}}'>
+                        {{row.nama}}
+                      </option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                <div class="mb-3">
+                  <label for="validationTextarea">Jumlah:</label>
+                  <input type="number" name="jumlah">
+                </div>
+                <input type="submit" value="Buat" name="tombol" class="mybutton">
+              </form>
+        </div>
+    </div>
+{% endblock content %}

@@ -45,10 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'login',
+    'aset',
+    'koleksi_aset',
+    'transaksi_pembelian',
     'paket_koin',
     'lumbung',
     'produk',
     'histori',
+    
 ]
 
 MIDDLEWARE = [

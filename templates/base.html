@@ -58,15 +58,15 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   {% if request.session.role == "Admin" %}
-                  <a class="dropdown-item" href="#">Buat Aset</a>                 
-                  <a class="dropdown-item" href="#">List Aset</a>
+                  <a class="dropdown-item" href="{% url 'aset:create_aset' %}">Buat Aset</a>                 
+                  <a class="dropdown-item" href="{% url 'aset:read_aset' %}">List Aset</a>
                   <a class="dropdown-item" href="#">Buat Hewan Menghasilkan Produk Hewan</a>
                   <a class="dropdown-item" href="#">List Hewan Menghasilkan Produk Hewan</a>                 
                   <a class="dropdown-item" href="#">Buat Bibit Menghasilkan Panen</a>
                   <a class="dropdown-item" href="#">List Bibit Menghasilkan Panen</a>
                   {% endif %}
                   {% if request.session.role == "Pengguna" %}               
-                  <a class="dropdown-item" href="#">List Aset</a>
+                  <a class="dropdown-item" href="{% url 'aset:read_aset' %}">List Aset</a>
                   <a class="dropdown-item" href="#">List Hewan Menghasilkan Produk Hewan</a>                 
                   <a class="dropdown-item" href="#">List Bibit Menghasilkan Panen</a>
                   {% endif %}
@@ -79,13 +79,13 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   {% if request.session.role == "Admin" %}
-                    <a class="dropdown-item" href="#">List Koleksi Aset</a>                 
-                    <a class="dropdown-item" href="#">List Transaksi Pembelian Aset</a>
+                    <a class="dropdown-item" href="{% url 'koleksi_aset:read_koleksi_aset' %}">List Koleksi Aset</a>                 
+                    <a class="dropdown-item" href="{% url 'transaksi_pembelian:read_transaksi_pembelian_aset' %}">List Transaksi Pembelian Aset</a>
                   {% endif %}
                   {% if request.session.role == "Pengguna" %}               
-                    <a class="dropdown-item" href="#">List Koleksi Aset</a>        
-                    <a class="dropdown-item" href="#">Buat Transaksi Pembelian Aset</a>                 
-                    <a class="dropdown-item" href="#">List Transaksi Pembelian Aset</a>
+                    <a class="dropdown-item" href="{% url 'koleksi_aset:read_koleksi_aset' %}">List Koleksi Aset</a>        
+                    <a class="dropdown-item" href="{% url 'transaksi_pembelian:create_transaksi_pembelian_aset' %}">Buat Transaksi Pembelian Aset</a>                 
+                    <a class="dropdown-item" href="{% url 'transaksi_pembelian:read_transaksi_pembelian_aset' %}">List Transaksi Pembelian Aset</a>
                   {% endif %}
                 </div>
               </li>

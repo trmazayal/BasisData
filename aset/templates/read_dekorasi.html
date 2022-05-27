@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Read Aset Dekorasi
+{% endblock title %}
+
+
+{% block content %}
+<div class="container justify-content-center align-items-center">
+    <h1 class="list_title">List Dekorasi</h1>
+    <h2 class="message">{{message}}</h2>
+
+    <div class="row justify-content-center">
+        <!-- {% if roleAdmin%}
+        <a href="{% url 'produk:createProduk' %}" class="mybutton" role="button" style="margin-bottom: 30px;">Create Item</a>
+        {% endif %}  -->
+        <table class="table table-hover table-striped text-center">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">ID Aset</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Minimum Level</th>
+                    <th scope="col">Harga Beli</th>
+                    <th scope="col">Harga Jual</th>
+                    {% if roleAdmin %}
+                    <th scope="col">Action</th>
+                    {% endif %} 
+                </tr>
+            </thead>
+            <tbody>
+            {%for row in list_dekorasi %}
+                <tr class="table-striped">
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{row.id_aset}}</td>
+                <td>{{row.nama}}</td>
+                <td>{{row.minimum_level}}</td>
+                <td>{{row.harga_beli}}</td>
+                <td>{{row.harga_jual}}</td>
+                {% if roleAdmin %}
+                <td>
+                    <a href="{% url 'aset:formUpdateDekorasi' row.id %}" class="mybutton butwhite" role="button">UPDATE</a>
+                    <br>
+                    {% if row.can_delete %}
+                    <a href="{% url 'aset:deleteDekorasi' row.id %}" class="mybutton butred" role="button">DELETE</a>
+                    {% endif %}
+                </td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table> 
+    </div>
+</div>
+{% endblock content %}
+
+

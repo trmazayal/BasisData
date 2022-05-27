@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Read Aset
+{% endblock title %}
+
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+    <title>HI DAY | Lihat Aset
+    </title>
+</head>
+<body>
+  <div class="container justify-content-center align-items-center">
+    <h1 class="list_title">Menu Lihat Aset</h1>
+    <div style="text-align:center">
+      <a class="btn btn-primary" style="margin:10px;" href="{% url 'aset:read_dekorasi' %}">Dekorasi</a>
+    </div>
+    <div style="text-align:center">
+      <a class="btn btn-primary" style="margin:10px;" href="{% url 'aset:read_bibit_tanaman' %}">Bibit Tanaman</a>
+    </div>
+    <div style="text-align:center">
+      <a class="btn btn-primary" style="margin:10px;" href="{% url 'aset:read_kandang' %}">Kandang</a>
+    </div>
+    <div style="text-align:center">
+      <a class="btn btn-primary" style="margin:10px;" href="{% url 'aset:read_hewan' %}">Hewan</a>
+    </div>
+    <div style="text-align:center">
+      <a class="btn btn-primary" style="margin:10px;" href="{% url 'aset:read_alat_produksi' %}">Alat Produksi</a>
+    </div>
+    <div style="text-align:center">
+      <a class="btn btn-primary"style="margin:10px;" href="{% url 'aset:read_petak_sawah' %}">Petak Sawah</a>
+    </div>
+</div>
+</body>
+{% endblock content %}
