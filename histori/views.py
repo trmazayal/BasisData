@@ -223,7 +223,7 @@ def create_histori_penjualan(request): #belum diimplementasikan secara maksimal
         """, [email, waktu_penjualan, koin, xp, id_pesanan]
     )
 
-    return redirect ('/ListHistoriPenjualan')
+    return redirect ('/ListHistoriPenjualan/')
 
 def list_pesanan(request):
     email = str(request.session['email'])
@@ -259,9 +259,6 @@ def detail_pesanan(request, id_pesanan):
     cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
 
-    data = []
-    html = ""
-
     if (role == "Pengguna"):
         cursor.execute("select p.nama as pnama, hp.koin, hp.xp, p.id, p.jenis, p.status, p.total from pesanan as p, histori_penjualan as hp where p.id = '"+id_pesanan+"' AND hp.email = '"+email+"' AND hp.id_pesanan = p.id")
         data1 = namedtuplefetchall(cursor)
@@ -270,7 +267,7 @@ def detail_pesanan(request, id_pesanan):
         html = "pengguna_detailpesanan.html"
 
     else:
-        cursor.execute("select p.nama as pnama, hp.koin, hp.xp, p.id, p.jenis, p.status, p.total from pesanan as p, histori_penjualan as hp where p.id = '"+id_pesanan+"' AND hp.id_pesanan = p.id")
+        cursor.execute("select p.nama as pnama, hp.koin, hp.xp, p.id, p.jenis, p.status, p.total from pesanan as p, histori_penjualan as hp where p.id = '"+id_pesanan+"' AND hp.id_pesanan = p.id AND hp.email = '"+email+"'")
         data1 = namedtuplefetchall(cursor)
         cursor.execute("select distinct pr.nama as prnama, dp.jumlah, dp.subtotal from pesanan as p, detail_pesanan as dp, produk as pr, histori_penjualan as hp where dp.id_pesanan = p.id AND dp.id_produk = pr.id AND dp.id_pesanan = '"+id_pesanan+"'")
         data2 = namedtuplefetchall(cursor)
@@ -351,6 +348,7 @@ def create_pesanan(request): #belum diimplementasikan maksimal
     id_pesanan = str(body.get('input_idpesanan'))
     nama = str(body.get('input_namapesanan'))
     jenis = str(body.get('input_jenispesanan'))
+    nama_produk = str(body.get('row1'))
     jumlah = str(body.get('input_jumlahpesanan'))
 
     cursor.execute(
@@ -381,6 +379,14 @@ def create_pesanan(request): #belum diimplementasikan maksimal
     else:
         str_noUrut = "NO" + str(noUrut_int)
 
+    cursor.execute(
+        """
+        SELECT pr.id from produk WHERE nama=%s
+        """,[nama_produk]
+    )
+    idProduk = namedtuplefetchall(cursor)
+    id_produk = str(idProduk[0].id)
+    
     cursor.execute(
         """
         INSERT INTO DETAIL_PESANAN VALUES (
@@ -442,9 +448,9 @@ def update_pesanan(request, id_pesanan): #belum diimplementasikan secara maksima
         return update_pesanan_view(request, id_pesanan)
 
     body = request.POST
-    nama = str(body.get('nama_pesanan'))
-    jenis = str(body.get('jenis_pesanan'))
-    status = str(body.get('status_pesanan'))
+    nama = str(body.get('input_namapesanan'))
+    jenis = str(body.get('input_jenispesanan'))
+    status = str(body.get('input_statuspesanan'))
 
     print(nama)
     print(jenis)
@@ -463,7 +469,7 @@ def update_pesanan(request, id_pesanan): #belum diimplementasikan secara maksima
     if (jenis=="None"):
         jenis = jenis_sebelum
 
-    if(status=="None"):
+    if (status=="None"):
         status = status_sebelum
 
     # if (nama=="None" AND jenis=="None" AND status=="None"):
@@ -485,7 +491,7 @@ def delete_pesanan(request, id_pesanan):
     cursor.execute("delete from pesanan where id = %s", [pesananID])
     cursor.execute("set search_path to public")
     message = "Data berhasil dihapus"
-    return list_pesanan(request)
+    return redirect('/ListPesanan/')
 
 def cekRole(email):
     cursor = connection.cursor()
