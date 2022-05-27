@@ -37,7 +37,7 @@
                 <td>{{row.nama}}</td>
                 <td>{{row.minimum_level}}</td>
                 <td>{{row.harga_beli}}</td>
-                <td>{{row.durasi_panen}}</td>
+                <td>{{row.durasi_panen}} menit </td>
                 {% if roleAdmin %}
                 <td>
                     <a href="{% url 'aset:formUpdateBibitTanaman' row.id_aset %}" class="mybutton butwhite" role="button">UPDATE</a>

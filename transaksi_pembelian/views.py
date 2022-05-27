@@ -16,7 +16,7 @@ def read_transaksi_pembelian_aset(request):
         return redirect('/')
     cursor.execute("set search_path to hiday")
 
-    cursor.execute("""select tp.email, tp.waktu, a.nama, tp.jumlah, a.harga_beli,
+    cursor.execute("""select tp.email, tp.waktu, a.nama, tp.jumlah, a.harga_beli * tp.jumlah as total_harga,
                     case
                         when tp.id_aset like 'DK%' then 'Dekorasi'
                         when tp.id_aset like 'BT%' then 'Bibit Tanaman'

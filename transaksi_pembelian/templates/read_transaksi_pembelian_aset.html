@@ -38,12 +38,12 @@
                     <th scope="row">{{forloop.counter}}</th>
                     {% if roleAdmin %}
                         <td>{{row.email}}</td>
-                        {% endif %} 
+                    {% endif %} 
                     <td>{{row.waktu}}</td>
                     <td>{{row.jenis_aset}}</td>
                     <td>{{row.nama}}</td>
                     <td>{{row.jumlah}}</td>
-                    <td>{{row.harga_beli}}</td>
+                    <td>{{row.total_harga}}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
