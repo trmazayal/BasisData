@@ -420,7 +420,8 @@ def update_pesanan_view(request, id_pesanan):
     arguments = {
         'result1': data1,
         'result2' : data2,
-        'total_koin' : total
+        'total_koin' : total,
+        'id_pesanan': id_pesanan,
     }
 
     cursor.execute("set search_path to public")
@@ -441,9 +442,13 @@ def update_pesanan(request, id_pesanan): #belum diimplementasikan secara maksima
         return update_pesanan_view(request, id_pesanan)
 
     body = request.POST
-    nama = str(body.get('input_namapesanan'))
-    jenis = str(body.get('input_jenispesanan'))
-    status = str(body.get('input_statuspesanan'))
+    nama = str(body.get('nama_pesanan'))
+    jenis = str(body.get('jenis_pesanan'))
+    status = str(body.get('status_pesanan'))
+
+    print(nama)
+    print(jenis)
+    print(status)
     
     cursor.execute("select p.id, p.nama, p.jenis, p.status from pesanan as p where p.id='"+id_pesanan+"'")
     data1 = namedtuplefetchall(cursor)
@@ -452,23 +457,32 @@ def update_pesanan(request, id_pesanan): #belum diimplementasikan secara maksima
     jenis_sebelum = data1[0].jenis
     status_sebelum = data1[0].status
 
-    if (nama=="" or jenis=="" or status==""):
+    if (nama=="None"):
         nama = nama_sebelum
+
+    if (jenis=="None"):
         jenis = jenis_sebelum
+
+    if(status=="None"):
         status = status_sebelum
+
+    # if (nama=="None" AND jenis=="None" AND status=="None"):
+    #     nama = nama_sebelum
+    #     jenis = jenis_sebelum
+    #     status = status_sebelum
 
     cursor.execute("update pesanan set nama = %s,  jenis = %s, status = %s where id = %s", 
                     [nama, jenis, status, id_pesanan])
 
     cursor.execute("set search_path to public")
 
-    return list_pesanan(request)
+    return redirect('/ListPesanan/')
 
-def delete_pesanan(request, pesananID):
+def delete_pesanan(request, id_pesanan):
     cursor = connection.cursor()
-    id_pesanan = str(pesananID)
+    pesananID = str(id_pesanan)
     cursor.execute("set search_path to hiday")
-    cursor.execute("delete from pesanan where id = %s", [id_pesanan])
+    cursor.execute("delete from pesanan where id = %s", [pesananID])
     cursor.execute("set search_path to public")
     message = "Data berhasil dihapus"
     return list_pesanan(request)

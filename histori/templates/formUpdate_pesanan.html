@@ -13,14 +13,16 @@
         <br/>
         <form action = "" method="POST", id="form">
             {% csrf_token %}
+            {% for detail in result1 %}
             <label class="id_pesanan">ID Pesanan: </label>
-            <input type="text" class="form-control" id="pesanan_id" name="input_idpesanan" value="{{ result1.id }}" required disabled>
+            <input type="text" class="form-control" id="id_pesanan" name="input_idpesanan" value="{{ detail.id }}" required disabled>
             <label class="nama_pesanan">Nama Pesanan: </label>
-            <input type="text" class="form-control" id="nama_pesanan" name="input_namapesanan" placeholder="{{ result1.nama }}" required>
+            <input type="text" class="form-control" id="nama_pesanan" name="input_namapesanan" placeholder="{{ detail.nama }}" required>
             <label class="jenis_pesanan">Jenis Pesanan: </label>
-            <input type="text" class="form-control" id="jenis_pesanan" name="input_jenispesanan" placeholder="{{ result1.jenis }}" required>
+            <input type="text" class="form-control" id="jenis_pesanan" name="input_jenispesanan" placeholder="{{ detail.jenis }}" required>
             <label class="jenis_pesanan">Status Pesanan: </label>
-            <input type="text" class="form-control" id="status_pesanan" name="input_statuspesanan" placeholder="{{ result1.status }}" required>
+            <input type="text" class="form-control" id="status_pesanan" name="input_statuspesanan" placeholder="{{ detail.status }}" required>
+            {% endfor %}
             <label class="pesanan_detail">Detail Pesanan: </label>
             <table border="3" width="35%">
                 <thead>
@@ -39,9 +41,10 @@
                 </tbody>
             </table>
             <label class="total_koin">Total Koin: {{ total_koin }}</label>
-            <input type="submit" value="Create">
             <br/>
-            <ul><a href="{% url 'histori:update_pesanan' result1.id %}">[SIMPAN]</ul>
+            <ul><a href="{% url 'histori:update_pesanan' id_pesanan %}">[SIMPAN]</ul>
+            <br/>
+            
         </form>
     </center>
 {% endblock content %}
