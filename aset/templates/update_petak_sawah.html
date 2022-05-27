@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Update Aset Petak Sawah
+{% endblock title %}
+
+
+{% block content %}
+<script>
+    function validateForm() {
+        var v = document.forms["myForm"]["id"].value;
+        var w = document.forms["myForm"]["nama"].value;
+        var x = document.forms["myForm"]["minimum_level"].value;
+        var y = document.forms["myForm"]["harga_beli"].value;
+        var z = document.forms["myForm"]["jenis_tanaman"].value;
+        if (v == "" || v == null  || w == "" || w == null || x == "" || x == null || y == "" || y == null || z == "" || z == null) {
+            alert("Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu");
+            return false;
+        }
+    }
+</script>
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Form Update Aset Petak Sawah</h1>
+    <div class="container-fluid">
+        <div class="col-md-8 offset-md-2 mt-5">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="validationTextarea">ID:</label>
+                  <input value='{{id}}' type="text" name="ID" disabled>
+                </div>
+                <div class="mb-3">
+                  <label for="validationTextarea">Nama:</label>
+                  <input value='{{nama}}' type="text" name="nama" disabled>
+                </div>
+                <div class="mb-3">
+                  <label for="validationTextarea">Minimum Level:</label>
+                  <input value='{{minimum_level}}' type="number" name="minimum_level">
+                </div>
+                <div class="mb-3">
+                  <label for="validationTextarea">Harga Beli:</label>
+                  <input value='{{harga_beli}}' type="number" name="harga_beli">
+                </div>
+                <div class="mb-3">
+                    <label for="validationTextarea">Jenis Tanaman:</label>
+                    <select name="tanaman">
+                      {%for row in tanaman %}
+                      <option value='{{row.nama}}'>
+                        {{row.nama}}
+                      </option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                <input type="submit" value="Buat" name="tombol" class="mybutton">
+              </form>
+        </div>
+    </div>
+{% endblock content %}

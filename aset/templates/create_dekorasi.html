@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Create Aset Dekorasi
+{% endblock title %}
+
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  function validateForm() {
+    var data = document.forms["myForm"]["formDekorasi"].value;
+    if (data == "" ) {
+      alert("“Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu.");
+      return false;
+    }
+  }
+</script>
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Form Buat Aset Dekorasi</h1>
+  <h2 class="message">{{message}}</h2>
+  <br>
+  <div class="row justify-content-center">
+    <div class="login">      
+      <form  method="POST" action="{% url 'aset:create_dekorasi' %}" onsubmit="return validateForm()" method="post" required>
+        {% csrf_token %}
+        <div class="loginForm" name="formDekorasi">{{ form.as_p }}</div>
+        <br>
+        <input type="submit" value="Tambahkan" name="tombol">
+      </form>
+      
+    </div>
+  </div>
+</div>
+{% endblock content %}

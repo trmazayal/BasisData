@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Read Transaksi Pembelian Aset
+{% endblock title %}
+
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+      <title>HI DAY | Lihat Transaksi Pembelian Aset
+      </title>
+</head>
+<body>
+    <div class="container justify-content-center align-items-center">
+        <h1 class="list_title">List Transaksi Pembelian Aset</h1>
+        <h2 class="message">{{message}}</h2>
+    
+        <div class="row justify-content-center">
+            <table class="table table-hover table-striped text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        {% if roleAdmin %}
+                            <th scope="col">Email</th>
+                        {% endif %} 
+                        <th scope="col">Waktu Pembelian</th>
+                        <th scope="col">Jenis</th>
+                        <th scope="col">Nama Aset</th>
+                        <th scope="col">Jumlah</th>
+                        <th scope="col">Total Harga</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {%for row in list_transaksi_pembelian %}
+                    <tr class="table-striped">
+                    <th scope="row">{{forloop.counter}}</th>
+                    {% if roleAdmin %}
+                        <td>{{row.email}}</td>
+                        {% endif %} 
+                    <td>{{row.waktu}}</td>
+                    <td>{{row.jenis_aset}}</td>
+                    <td>{{row.nama}}</td>
+                    <td>{{row.jumlah}}</td>
+                    <td>{{row.harga_beli}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table> 
+        </div>
+    </div>
+</body>
+{% endblock content %}

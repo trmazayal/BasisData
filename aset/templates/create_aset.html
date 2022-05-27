@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Create Aset
+{% endblock title %}
+
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+    <title>HI DAY | Buat Aset
+    </title>
+</head>
+<body>
+  <div class="container justify-content-center align-items-center">
+    <h1 class="list_title">Menu Buat Aset</h1>
+    <div style="text-align:center">
+      <a class="btn btn-primary" style="margin:10px;" href="{% url 'aset:create_dekorasi' %}">Dekorasi</a>
+    </div>
+    <div style="text-align:center">
+      <a class="btn btn-primary" style="margin:10px;" href="{% url 'aset:create_bibit_tanaman' %}">Bibit Tanaman</a>
+    </div>
+    <div style="text-align:center">
+      <a class="btn btn-primary" style="margin:10px;" href="{% url 'aset:create_kandang' %}">Kandang</a>
+    </div>
+    <div style="text-align:center">
+      <a class="btn btn-primary" style="margin:10px;" href="{% url 'aset:create_hewan' %}">Hewan</a>
+    </div>
+    <div style="text-align:center">
+      <a class="btn btn-primary" style="margin:10px;" href="{% url 'aset:create_alat_produksi' %}">Alat Produksi</a>
+    </div>
+    <div style="text-align:center">
+      <a class="btn btn-primary"style="margin:10px;" href="{% url 'aset:create_petak_sawah' %}">Petak Sawah</a>
+    </div>
+</div>
+</body>
+{% endblock content %}

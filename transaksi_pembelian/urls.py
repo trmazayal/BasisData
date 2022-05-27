@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.urls import path
-from .views import read_transaksi_pembelian
+from . import views
 
-app_name = "koleksi_aset"
+app_name = "transaksi_pembelian"
+
 urlpatterns = [
-    path('menuBuatTransaksiPembelian/', menu_create_transaksi_pembelian, name='menu_create_transaksi_pembelian'),
-    path('readTransaksiPembelian/', read_transaksi_pembelian, name='read_transaksi_pembelian'),
+    path('read/', views.read_transaksi_pembelian_aset, name='read_transaksi_pembelian_aset'),
+    path('create/', views.create_transaksi_pembelian_aset, name='create_transaksi_pembelian_aset'),
+
 ]

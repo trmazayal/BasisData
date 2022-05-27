@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Histori Produksi Makanan
+{% endblock title %}
+
+
+{% block content %}
+<div class="container justify-content-center align-items-center">
+    <h1 class="list_title">Histori Produksi Makanan</h1>
+    <h2 class="message">{{message}}</h2>
+
+    <div class="row justify-content-center">
+        {% if rolePengguna %}
+        <a href="/form_histori_produksi_makanan/" class="mybutton" role="button" style="margin-bottom: 30px;">Create Item</a>
+        {% endif %} 
+        <table class="table table-hover table-striped text-center">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Waktu Awal</th>
+                    <th scope="col">Waktu Selesai</th>
+                    <th scope="col">Jumlah</th>
+                    <th scope="col">XP</th>
+                    <th scope="col">Produk Makanan</th>
+                    <th scope="col">Alat Produksi</th>
+                </tr>
+            </thead>
+            <tbody>
+            {%for row in hasil %}
+            <tr class="table-striped">
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{row.email}}</td>
+                <td>{{row.waktu_awal}}</td>
+                <td>{{row.waktu_selesai}}</td>
+                <td>{{row.jumlah}}</td>
+                <td>{{row.xp}}</td>
+                <td>{{row.produk}}</td>
+                <td>{{row.alat}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table> 
+    </div>
+</div>
+{% endblock content %}
+

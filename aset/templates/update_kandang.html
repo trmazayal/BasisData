@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Update Aset Kandang
+{% endblock title %}
+
+
+{% block content %}
+<div class="container justify-content-center align-items-center">
+  <h1 class="list_title">Update Aset Kandang</h1>
+  <h2 class="message">{{message}}</h2>
+
+    <div class="row mainRow align-items-center justify-content-center">
+      <div class="login">      
+        <h2>Update Aset Kandang</h2>
+        <br>
+        <form  method="POST" action="/aset/update/kandang/">
+          {% csrf_token %}
+          {% for field in form.visible_fields %}
+            <div class="loginForm">{{ field.label_tag }} {{ field }}</div>
+          {% endfor %}
+          <input type="submit" value="Simpan" name="tombol" class="mybutton">
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

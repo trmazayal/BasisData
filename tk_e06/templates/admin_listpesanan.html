@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    HI DAY | List Pesanan
+{% endblock title %}
+
+{% block content %}
+    <center>
+        <br/>
+        <h1><b>List Pesanan</b></h1>
+        <br/>
+        {% if result %}
+        <table border="3" width="35%">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">ID Pesanan</th>
+                    <th scope="col">Jenis Pesanan</th>
+                    <th scope="col">Nama Pesanan</th>
+                    <th scope="col">Total Koin</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <body>
+            {% for pesanan in result %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ pesanan.id }}</td>
+                <td>{{ pesanan.jenis }}</td>
+                <td>{{ pesanan.nama }}</td>
+                <td>{{ pesanan.total }}</td>
+                <td>{{ pesanan.status }}</td>
+                <td>{{ pesanan.nama }}</td>
+                <td>
+                    <ul><a href="{% url 'detail_pesanan' pesanan.id %}">[Detail]</ul>
+                    <ul><a  href="#">[Update]</ul>
+                    <ul><a  href="#">[Delete]</ul>
+                </td>
+            </tr>
+            {% endfor %}
+            </body>
+        </table>
+        {% else %}
+        <h3>Belum Ada Pesanan</h3>
+        {% endif %}
+    </center>
+{% endblock content %}
