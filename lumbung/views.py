@@ -30,11 +30,12 @@ def cekRole(email):
             return "Pengguna"
 
 def transaksi_upgrade_lumbung(request):
+    cursor = connection.cursor()
+    cursor.execute("set search_path to public")
     try:
         email = request.session['email']
     except Exception as e:
         return redirect('/')
-    cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
 
     role = cekRole(email)
@@ -69,11 +70,12 @@ def transaksi_upgrade_lumbung(request):
     return render(request, "transaksi_upgrade_lumbung.html", argument)
 
 def histori_produksi_tanaman(request):
+    cursor = connection.cursor()
+    cursor.execute("set search_path to public")
     try:
         email = request.session['email']
     except Exception as e:
         return redirect('/')
-    cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
 
     role = cekRole(email)
@@ -110,8 +112,9 @@ def histori_produksi_tanaman(request):
 
 def upgrade_lumbung(request):
     message =""
-    email = request.session['email']
     cursor = connection.cursor()
+    cursor.execute("set search_path to public")
+    email = request.session['email']
     cursor.execute("set search_path to hiday")
     cursor.execute("select * from lumbung where email ='"+ email+ "'")
     hasil= namedtuplefetchall(cursor)
@@ -148,8 +151,9 @@ def upgrade_lumbung(request):
     return render(request, "upgrade_lumbung.html", argument)
 
 def produksi_tanaman(request):
-    email = request.session['email']
     cursor = connection.cursor()
+    cursor.execute("set search_path to public")
+    email = request.session['email']
     cursor.execute("set search_path to hiday")
     cursor.execute("select a.nama from aset a, koleksi_aset_memiliki_aset km where a.id = km.id_aset and a.id like 'BT%' and km.id_koleksi_aset = '"+ email +"'")
     bibit_choices = namedtuplefetchall(cursor)
