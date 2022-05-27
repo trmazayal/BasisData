@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
 from collections import namedtuple
 from django.db import connection
@@ -414,11 +414,13 @@ def createHistoriProduksiMakanan(request):
         cursor.execute("set search_path to hiday")
         
         try:
-            cursor.execute("select id_alat_produksi from produksi where id_produk_makanan = %s", [id_nama_produk])
+            cursor.execute("select id_alat_produksi,durasi from produksi where id_produk_makanan = %s", [id_nama_produk])
             hasil = namedtuplefetchall(cursor)
             id_alat_produksi = hasil[0].id_alat_produksi
+            durasi = str(hasil[0].durasi)
+            waktu_selesai = get_durasi(date_time,durasi)
             
-            cursor.execute("insert into histori_produksi values (%s, %s, %s, %s, %s)", [email, date_time, date_time, jumlah_produksi, xp])
+            cursor.execute("insert into histori_produksi values (%s, %s, %s, %s, %s)", [email, date_time, waktu_selesai, jumlah_produksi, xp])
             
             cursor.execute("insert into histori_produksi_makanan values (%s, %s, %s, %s)", [email, date_time, id_alat_produksi, id_nama_produk])
             return viewsHistoriProduksiMakanan(request, message)
@@ -491,4 +493,10 @@ def get_format_time(time_str):
 
 def get_time_now():
     date_time = datetime.now()
+    return date_time.strftime("%Y-%m-%d %H:%M:%S")
+
+def get_durasi(date_time,durasi):
+    temp = str(durasi)
+    hh, mm, ss = temp.split(':')
+    date_time = datetime.now() + timedelta(hours=int(hh), minutes=int(mm), seconds=int(ss))
     return date_time.strftime("%Y-%m-%d %H:%M:%S")
