@@ -20,8 +20,8 @@ def read_dekorasi(request):
 	                    when not exists(select * from koleksi_aset_memiliki_aset kama where kama.id_aset = dekorasi.id_aset) and
                         not exists(select * from dekorasi_memiliki_histori_penjualan dmhp where dmhp.id_dekorasi = dekorasi.id_aset)
                     then 1 else 0 end as can_delete
-                    from aset left join dekorasi on dekorasi.id_aset = aset.id
-                    """)
+                    from aset join dekorasi on dekorasi.id_aset = aset.id
+                    where aset.id like 'DK%'""")
     hasil = namedtuplefetchall(cursor)
 
     data = {
@@ -58,7 +58,8 @@ def read_bibit_tanaman(request):
                         not exists(select * from bibit_tanaman_menghasilkan_hasil_panen btmhp where btmhp.id_bibit_tanaman = bibit_tanaman.id_aset) and 
                         not exists(select * from histori_tanaman ht where ht.id_bibit_tanaman = bibit_tanaman.id_aset) 
                     then 1 else 0 end as can_delete
-                    from aset left join bibit_tanaman on bibit_tanaman.id_aset = aset.id""")
+                    from aset join bibit_tanaman on bibit_tanaman.id_aset = aset.id
+                    where aset.id like 'BT%'""")
     hasil = namedtuplefetchall(cursor)
 
     roleAdmin = False
@@ -89,7 +90,8 @@ def read_kandang(request):
                     case
 	                    when not exists(select * from koleksi_aset_memiliki_aset kama where kama.id_aset = kandang.id_aset)
                     then 1 else 0 end as can_delete
-                    from aset left join kandang on kandang.id_aset = aset.id""")
+                    from aset join kandang on kandang.id_aset = aset.id
+                    where aset.id like 'KD%'""")
     hasil = namedtuplefetchall(cursor)
 
     roleAdmin = False
@@ -122,7 +124,8 @@ def read_hewan(request):
                         not exists(select * from hewan_menghasilkan_produk_hewan hmph where hmph.id_hewan = hewan.id_aset) and 
                         not exists(select * from histori_hewan hh where hh.id_hewan = hewan.id_aset)
                     then 1 else 0 end as can_delete
-                    from aset left join hewan on hewan.id_aset = aset.id""")
+                    from aset join hewan on hewan.id_aset = aset.id
+                    where aset.id like 'HW%'""")
     hasil = namedtuplefetchall(cursor)
 
     roleAdmin = False
@@ -154,7 +157,8 @@ def read_alat_produksi(request):
 	                    when not exists(select * from koleksi_aset_memiliki_aset kama where kama.id_aset = alat_produksi.id_aset) and 
                         not exists(select * from produksi p where p.id_alat_produksi = alat_produksi.id_aset)
                     then 1 else 0 end as can_delete
-                    from aset left join alat_produksi on alat_produksi.id_aset = aset.id""")
+                    from aset join alat_produksi on alat_produksi.id_aset = aset.id
+                    where aset.id like 'AP%'""")
     hasil = namedtuplefetchall(cursor)
 
     roleAdmin = False
@@ -185,7 +189,8 @@ def read_petak_sawah(request):
                     case
 	                    when not exists(select * from koleksi_aset_memiliki_aset kama where kama.id_aset = petak_sawah.id_aset)
                     then 1 else 0 end as can_delete
-                    from aset left join petak_sawah on petak_sawah.id_aset = aset.id""")
+                    from aset join petak_sawah on petak_sawah.id_aset = aset.id
+                    where aset.id like 'PS%'""")
     hasil = namedtuplefetchall(cursor)
 
     roleAdmin = False
