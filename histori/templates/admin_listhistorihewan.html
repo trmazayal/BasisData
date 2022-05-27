@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block title %}
-    HI DAY | List Histori Penjualan
+    HI DAY | List Histori Hewan
 {% endblock title %}
 {% block meta%}
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-{% endblock meta%}
+{% endblock meta %}
 {% block content %}
     <center>
-        <h1><b>List Histori Penjualan</b></h1>
+        <h1><b>List Histori Hewan</b></h1>
         <br/>
         {% if result %}
         <table border="3" width="35%">
@@ -24,7 +24,7 @@
                     <th scope="col">Hewan</th>
                 </tr>
             </thead>
-            <body>
+            <tbody>
             {% for hewan in result %}
             <tr>
                 <td>{{ forloop.counter }}</td>
@@ -36,7 +36,7 @@
                 <td>{{ hewan.nama }}</td>
             </tr>
             {% endfor %}
-            </body>
+            </tbody>
         </table>
         {% else %}
         <h3>Belum Ada Penjualan</h3>

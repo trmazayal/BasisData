@@ -49,10 +49,11 @@ def list_histori_hewan(request):
         html = "pengguna_listhistorihewan.html"
 
     else:
-        cursor.execute("select hw.email, hw.waktu_awal, hp.waktu_selesai, hp.jumlah, hp.xp, a.nama from histori_hewan as hw, histori_produksi as hp, aset as a where hw.email = hp.email AND hw.id_hewan = a.id AND hp.waktu_awal = hw.waktu_awal")
+        cursor.execute("select hw.email, hw.waktu_awal, hp.waktu_selesai, hp.jumlah, hp.xp, a.nama from histori_hewan as hw, histori_produksi as hp, aset as a where hw.email = hp.email AND hp.waktu_awal = hw.waktu_awal AND hw.id_hewan = a.id")
         data = namedtuplefetchall(cursor)
         html = "admin_listhistorihewan.html"
 
+    print(data)
     arguments = {
         'result': data
     }
@@ -136,6 +137,8 @@ def list_histori_penjualan(request):
     else:
         cursor.execute("select * from histori_penjualan")
         data = namedtuplefetchall(cursor)
+        cursor.execute("select dp.subtotal from histori_penjualan as hp, pesanan as p, detail_pesanan as dp where hp.id_pesanan = p.id AND p.id = dp.id_pesanan")
+        totalKoin = namedtuplefetchall(cursor)
         html = "admin_listhistoripenjualan.html"
 
     print(data)
@@ -157,28 +160,6 @@ def list_histori_penjualan(request):
 
     return render(request, html, arguments)
 
-def create_histori_penjualan_view(request):
-    email = str(request.session['email'])
-    role = cekRole(email)
-    cursor = connection.cursor()
-    cursor.execute("set search_path to hiday")
-
-    data = []
-    html = ""
-
-    if (role == "Pengguna"):
-        cursor.execute("")
-        data = namedtuplefetchall(cursor)
-        html = "formCreate_histori_penjualan.html"
-
-    arguments = {
-        'result': data
-    }
-
-    cursor.execute("set search_path to public")
-    cursor.close()
-    return render(request, html, arguments)
-
 def detail_histori_penjualan(request, id_pesanan):
     email = str(request.session['email'])
     role = cekRole(email)
@@ -196,9 +177,9 @@ def detail_histori_penjualan(request, id_pesanan):
         html = "pengguna_detailhistoripenjualan.html"
 
     else:
-        cursor.execute("select hp.waktu_penjualan, p.nama as pnama, hp.koin, hp.xp, hp.id_pesanan, p.jenis, p.status, p.total from pesanan as p, histori_penjualan as hp where p.id = '"+id_pesanan+"'")
+        cursor.execute("select hp.email, hp.waktu_penjualan, p.nama as pnama, hp.koin, hp.xp, hp.id_pesanan, p.jenis, p.status, p.total from pesanan as p, histori_penjualan as hp where p.id = '"+id_pesanan+"' AND hp.email='"+email+"'")
         data1 = namedtuplefetchall(cursor)
-        cursor.execute("select dp.subtotal, dp.jumlah, pr.nama as prnama from produk as pr, detail_pesanan as dp, pesanan as p, histori_penjualan as hp where p.id = dp.id_pesanan AND dp.id_produk = pr.id AND dp.id_pesanan = '"+id_pesanan+"'")
+        cursor.execute("select dp.subtotal, dp.jumlah, pr.nama as prnama from produk as pr, detail_pesanan as dp, pesanan as p, histori_penjualan as hp where p.id = dp.id_pesanan AND dp.id_produk = pr.id AND dp.id_pesanan = '"+id_pesanan+"' AND hp.email='"+email+"'")
         data2 = namedtuplefetchall(cursor)
         html = "admin_detailhistoripenjualan.html"
 
@@ -231,13 +212,18 @@ def create_histori_penjualan(request): #belum diimplementasikan secara maksimal
     if (role == "Admin"):
         return HttpResponse("You are not authorized")
 
-    # if request.method != "POST":
-    #     return create_histori_penjualan_view(request)
-
     body = request.POST
+    id_pesanan = str(body.get('id'))
 
+    cursor.execute(
+        """
+        INSERT INTO HISTORI_PENJUALAN VALUES(
+            %s, %s, %s, %s, %s 
+        )
+        """, [email, waktu_penjualan, koin, xp, id_pesanan]
+    )
 
-    return redirect ()
+    return redirect ('/ListHistoriPenjualan')
 
 def list_pesanan(request):
     email = str(request.session['email'])
@@ -286,45 +272,128 @@ def detail_pesanan(request, id_pesanan):
     else:
         cursor.execute("select p.nama as pnama, hp.koin, hp.xp, p.id, p.jenis, p.status, p.total from pesanan as p, histori_penjualan as hp where p.id = '"+id_pesanan+"' AND hp.id_pesanan = p.id")
         data1 = namedtuplefetchall(cursor)
-        cursor.execute("select pr.nama as prnama, dp.jumlah, dp.subtotal from pesanan as p, detail_pesanan as dp, produk as pr, histori_penjualan as hp where dp.id_pesanan = p.id AND dp.id_produk = pr.id AND dp.id_pesanan = '"+id_pesanan+"'")
+        cursor.execute("select distinct pr.nama as prnama, dp.jumlah, dp.subtotal from pesanan as p, detail_pesanan as dp, produk as pr, histori_penjualan as hp where dp.id_pesanan = p.id AND dp.id_produk = pr.id AND dp.id_pesanan = '"+id_pesanan+"'")
         data2 = namedtuplefetchall(cursor)
         html = "admin_detailpesanan.html"
 
     print(data1)
     print(data2)
+    total = 0
+    for q in range(len(data2)):
+        print(data2[q].subtotal)
+        total += int(data2[q].subtotal)
+
+    print(total)
     arguments = {
         'result1': data1,
         'result2' : data2
     }
+    arguments['total_koin'] = total
 
     cursor.execute("set search_path to public")
     cursor.close()
 
     return render(request, html, arguments)
 
-def create_pesanan(request): #belum diimplementasikan secara maksimal
+def create_pesanan_view(request): #belum diimplementasikan secara maksimal
     email = str(request.session['email'])
     role = cekRole(email)
     cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
+    print(role)
 
     data = []
     html = ""
 
     if (role == "Admin"):
-        cursor.execute("select p.*, dp.*, pr.nama as pnama from pesanan as p, detail pesanan as dp, produk as pr")
-        data = namedtuplefetchall(cursor)
+        cursor.execute("select id from pesanan order by id desc limit 1")
+        id_pesanan = namedtuplefetchall(cursor)
+        cursor.execute("select nama from produk")
+        nama_produk = namedtuplefetchall(cursor)
         html = "formCreate_pesanan.html"
 
+    print(id_pesanan)
+    id_str = id_pesanan[0].id
+    id_int = int(id_str[2:5])
+    print(id_int)
+    id_int = id_int+1
+    if (id_int < 10):
+        str_id = "PS00" + str(id_int)
+    elif (id_int < 100):
+        str_id = "PS0" + str(id_int)
+    else:
+        str_id = "PS" + str(id_int)
+
     arguments = {
-        'result': data
+        'id': str_id,
+        'nama_produk': nama_produk
     }
 
     cursor.execute("set search_path to public")
     cursor.close()
+
     return render(request, html, arguments)
 
-def update_pesanan(request): #belum diimplementasikan secara maksimal
+def create_pesanan(request): #belum diimplementasikan maksimal
+    email = str(request.session['email'])
+    role = cekRole(email)
+    cursor = connection.cursor()
+    cursor.execute("set search_path to hiday")
+
+    if (role == "Pengguna"):
+        return HttpResponse("You are not authorized")
+
+    if request.method != "POST":
+        return create_pesanan_view(request)
+
+    body = request.POST
+
+    id_pesanan = str(body.get('input_idpesanan'))
+    nama = str(body.get('input_namapesanan'))
+    jenis = str(body.get('input_jenispesanan'))
+    jumlah = str(body.get('input_jumlahpesanan'))
+
+    cursor.execute(
+        """
+        INSERT INTO PESANAN VALUES (
+            %s, "Baru Dipesan", %s, %s, %s
+        )
+        """, [id_pesanan, jenis, nama, subtotal]
+        )
+
+    cursor.execute(
+        """
+        SELECT no_urut FROM DETAIL_PESANAN
+        order by no_urut desc limit 1
+        """
+    )
+    noUrut = namedtuplefetchall(cursor)
+
+    print(noUrut)
+    noUrut_str = noUrut[0].nomor_urut
+    noUrut_int = int(noUrut_str[2:5])
+    print(noUrut_int)
+    noUrut_int = noUrut_int+1
+    if (noUrut_int < 10):
+        str_noUrut = "NO00" + str(noUrut_int)
+    elif (noUrut_int < 100):
+        str_noUrut = "NO0" + str(noUrut_int)
+    else:
+        str_noUrut = "NO" + str(noUrut_int)
+
+    cursor.execute(
+        """
+        INSERT INTO DETAIL_PESANAN VALUES (
+            %s, %s, %s, %s, %s)
+        """, [id_pesanan, str_noUrut, subtotal, jumlah, id_produk]
+    )
+
+    cursor.execute("set search_path to public")
+    cursor.close()
+
+    return redirect('/ListPesanan/')
+
+def update_pesanan_view(request, id_pesanan):
     email = str(request.session['email'])
     role = cekRole(email)
     cursor = connection.cursor()
@@ -334,17 +403,75 @@ def update_pesanan(request): #belum diimplementasikan secara maksimal
     html = ""
 
     if (role == "Admin"):
-        cursor.execute("select p.*, dp.*, pr.nama as pnama from pesanan as p, detail pesanan as dp, produk as pr")
-        data = namedtuplefetchall(cursor)
-        html = "formUpdate_histori_penjualan.html"
+        cursor.execute("select p.id, p.nama, p.jenis, p.status from pesanan as p where p.id='"+id_pesanan+"'")
+        data1 = namedtuplefetchall(cursor)
+        cursor.execute("select dp.subtotal, dp.jumlah, pr.nama as prnama from produk as pr, detail_pesanan as dp, pesanan as p where p.id = dp.id_pesanan AND dp.id_produk = pr.id AND dp.id_pesanan = '"+id_pesanan+"'")
+        data2 = namedtuplefetchall(cursor)
+        html = "formUpdate_pesanan.html"
 
+    print(data1)
+    print(data2)
+    total = 0
+    for q in range(len(data2)):
+        print(data2[q].subtotal)
+        total += int(data2[q].subtotal)
+
+    print(total)
     arguments = {
-        'result': data
+        'result1': data1,
+        'result2' : data2,
+        'total_koin' : total
     }
 
     cursor.execute("set search_path to public")
     cursor.close()
+
     return render(request, html, arguments)
+
+def update_pesanan(request, id_pesanan): #belum diimplementasikan secara maksimal
+    email = str(request.session['email'])
+    role = cekRole(email)
+    cursor = connection.cursor()
+    cursor.execute("set search_path to hiday")
+
+    if (role == "Pengguna"):
+        return HttpResponse("You are not authorized")
+
+    if (request != "POST"):
+        return update_pesanan_view(request, id_pesanan)
+
+    body = request.POST
+    nama = str(body.get('input_namapesanan'))
+    jenis = str(body.get('input_jenispesanan'))
+    status = str(body.get('input_statuspesanan'))
+    
+    cursor.execute("select p.id, p.nama, p.jenis, p.status from pesanan as p where p.id='"+id_pesanan+"'")
+    data1 = namedtuplefetchall(cursor)
+
+    nama_sebelum = data1[0].nama
+    jenis_sebelum = data1[0].jenis
+    status_sebelum = data1[0].status
+
+    if (nama=="" or jenis=="" or status==""):
+        nama = nama_sebelum
+        jenis = jenis_sebelum
+        status = status_sebelum
+
+    cursor.execute("update pesanan set nama = %s,  jenis = %s, status = %s where id = %s", 
+                    [nama, jenis, status, id_pesanan])
+
+    cursor.execute("set search_path to public")
+
+    return list_pesanan(request)
+
+def delete_pesanan(request, pesananID):
+    cursor = connection.cursor()
+    id_pesanan = str(pesananID)
+    cursor.execute("set search_path to hiday")
+    cursor.execute("delete from pesanan where id = %s", [id_pesanan])
+    cursor.execute("set search_path to public")
+    message = "Data berhasil dihapus"
+    return list_pesanan(request)
 
 def cekRole(email):
     cursor = connection.cursor()

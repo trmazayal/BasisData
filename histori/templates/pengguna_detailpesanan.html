@@ -29,6 +29,7 @@
                     <td>Status Pesanan: {{ detail.status }}</td>
                 </tr>
                 <br/>
+                {% endfor %}
                 <tr>
                     <td>Detail Pesanan:</td>
                 </tr>
@@ -41,7 +42,7 @@
                                 <th scope="col">Subtotal</th>
                             </tr>
                         </thead>
-                        <body>
+                        <tbody>
                         {% for pesanan in result2 %}
                         <tr>
                             <td>{{ pesanan.prnama }}</td>
@@ -49,14 +50,13 @@
                             <td>{{ pesanan.subtotal }}</td>
                         </tr>
                         {% endfor %}
-                        </body>
+                        </tbody>
                     </table>
                 </tr>
-                <tr>Total Koin: {{ detail.koin }}</tr>
+                <tr>Total Koin: {{ total_koin }}</tr>
                 <br/>
-                {% endfor %}
                 <tr>
-                    <button class="btn btn-success"><a href="#">[AMBIL]</button>
+                    <button class="btn btn-success"><a href="{% url 'histori:create_histori_penjualan' %}">[AMBIL]</button>
                 </tr>
             </body>
         </table>

@@ -2,21 +2,46 @@
 {% load static %}
 
 {% block title %}
-    HI DAY | Histori Penjualan
+    HI DAY | Pesanan
 {% endblock title %}
 {% block meta%}
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 {% endblock meta%}
 {% block content %}
     <center>
-        <h1>FORM UPDATE HISTORI PENJUALAN</h1>
+        <h1>FORM UBAH PESANAN</h1>
         <br/>
         <form action = "" method="POST", id="form">
             {% csrf_token %}
-            
+            <label class="id_pesanan">ID Pesanan: </label>
+            <input type="text" class="form-control" id="pesanan_id" name="input_idpesanan" value="{{ result1.id }}" required disabled>
+            <label class="nama_pesanan">Nama Pesanan: </label>
+            <input type="text" class="form-control" id="nama_pesanan" name="input_namapesanan" placeholder="{{ result1.nama }}" required>
+            <label class="jenis_pesanan">Jenis Pesanan: </label>
+            <input type="text" class="form-control" id="jenis_pesanan" name="input_jenispesanan" placeholder="{{ result1.jenis }}" required>
+            <label class="jenis_pesanan">Status Pesanan: </label>
+            <input type="text" class="form-control" id="status_pesanan" name="input_statuspesanan" placeholder="{{ result1.status }}" required>
+            <label class="pesanan_detail">Detail Pesanan: </label>
+            <table border="3" width="35%">
+                <thead>
+                    <tr>
+                        <th scope="col">Nama Produksi</th>
+                        <th scope="col">Jumlah Produksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for pesanan in result2 %}
+                <tr>
+                    <td>{{ pesanan.prnama }}</td>
+                    <td>{{ pesanan.jumlah }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <label class="total_koin">Total Koin: {{ total_koin }}</label>
             <input type="submit" value="Create">
             <br/>
-            <ul><a href="#">[PRODUKSI]</ul>
+            <ul><a href="{% url 'histori:update_pesanan' result1.id %}">[SIMPAN]</ul>
         </form>
     </center>
 {% endblock content %}
