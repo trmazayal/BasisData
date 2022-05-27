@@ -25,7 +25,7 @@
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <body>
+            <tbody>
             {% for pesanan in result %}
             <tr>
                 <td>{{ forloop.counter }}</td>
@@ -37,12 +37,12 @@
                 <td>{{ pesanan.nama }}</td>
                 <td>
                     <ul><a href="{% url 'histori:detail_pesanan' pesanan.id %}">[Detail]</ul>
-                    <ul><a  href="#">[Update]</ul>
-                    <ul><a  href="#">[Delete]</ul>
+                    <ul><a href="{% url 'histori:update_pesanan' pesanan.id %}">[Update]</ul>
+                    <ul><a href="{% url 'histori:delete_pesanan' pesanan.id %}">[Delete]</ul>
                 </td>
             </tr>
             {% endfor %}
-            </body>
+            </tbody>
         </table>
         {% else %}
         <h3>Belum Ada Pesanan</h3>

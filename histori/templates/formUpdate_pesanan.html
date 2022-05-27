@@ -2,21 +2,49 @@
 {% load static %}
 
 {% block title %}
-    HI DAY | Histori Penjualan
+    HI DAY | Pesanan
 {% endblock title %}
 {% block meta%}
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 {% endblock meta%}
 {% block content %}
     <center>
-        <h1>FORM UPDATE HISTORI PENJUALAN</h1>
+        <h1>FORM UBAH PESANAN</h1>
         <br/>
         <form action = "" method="POST", id="form">
             {% csrf_token %}
-            
-            <input type="submit" value="Create">
+            {% for detail in result1 %}
+            <label class="id_pesanan">ID Pesanan: </label>
+            <input type="text" class="form-control" id="id_pesanan" name="input_idpesanan" value="{{ detail.id }}" required disabled>
+            <label class="nama_pesanan">Nama Pesanan: </label>
+            <input type="text" class="form-control" id="nama_pesanan" name="input_namapesanan" placeholder="{{ detail.nama }}" required>
+            <label class="jenis_pesanan">Jenis Pesanan: </label>
+            <input type="text" class="form-control" id="jenis_pesanan" name="input_jenispesanan" placeholder="{{ detail.jenis }}" required>
+            <label class="jenis_pesanan">Status Pesanan: </label>
+            <input type="text" class="form-control" id="status_pesanan" name="input_statuspesanan" placeholder="{{ detail.status }}" required>
+            {% endfor %}
+            <label class="pesanan_detail">Detail Pesanan: </label>
+            <table border="3" width="35%">
+                <thead>
+                    <tr>
+                        <th scope="col">Nama Produksi</th>
+                        <th scope="col">Jumlah Produksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for pesanan in result2 %}
+                <tr>
+                    <td>{{ pesanan.prnama }}</td>
+                    <td>{{ pesanan.jumlah }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <label class="total_koin">Total Koin: {{ total_koin }}</label>
             <br/>
-            <ul><a href="#">[PRODUKSI]</ul>
+            <ul><a href="{% url 'histori:update_pesanan' id_pesanan %}">[SIMPAN]</ul>
+            <br/>
+            
         </form>
     </center>
 {% endblock content %}

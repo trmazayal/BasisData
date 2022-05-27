@@ -14,10 +14,9 @@
         <br/>
         <h1><b>Detail Histori Penjualan Pesanan</b></h1>
         <br/>
-        {% if result %}
         <table>
             <body>
-                {% for detail in result %}
+                {% for detail in result1 %}
                 <tr>
                     <td>Email Pengguna: {{ detail.email }}</td>
                 <tr>
@@ -36,7 +35,6 @@
                 <tr>
                     <td>Status Pesanan: {{ detail.status }}</td>
                 </tr>
-                {% endfor %}
                 <br/>
                 <tr>
                     <td>Rincian Pesanan:</td>
@@ -51,7 +49,7 @@
                             </tr>
                         </thead>
                         <body>
-                        {% for pesanan in result %}
+                        {% for pesanan in result2 %}
                         <tr>
                             <td>{{ pesanan.prnama }}</td>
                             <td>{{ pesanan.jumlah }}</td>
@@ -61,10 +59,14 @@
                         </body>
                     </table>
                 </tr>
-                <tr>Total Koin: {{ detail.total }}</tr>
+                <tr>
+                    <td>
+                        Total Koin: {{ total_koin }}
+                    </td>
+                </tr>
                 <br/>
+                {% endfor %}
             </body>
         </table>
-        {% endif %}
     </center>
 {% endblock content %}

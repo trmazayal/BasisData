@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    HI DAY | Detail Histori Penjualan
+    HI DAY | Detail Pesanan
 {% endblock title %}
 
 {% block meta%}
@@ -12,12 +12,11 @@
 {% block content %}
     <center>
         <br/>
-        <h1><b>Detail Histori Penjualan Pesanan</b></h1>
+        <h1><b>Detail Pesanan</b></h1>
         <br/>
-        {% if result %}
         <table>
             <body>
-                {% for detail in result %}
+                {% for detail in result1 %}
                 <br/>
                 <tr>
                     <td>ID Pesanan: {{ detail.id }}</td>
@@ -46,7 +45,7 @@
                             </tr>
                         </thead>
                         <body>
-                        {% for pesanan in result %}
+                        {% for pesanan in result2 %}
                         <tr>
                             <td>{{ pesanan.prnama }}</td>
                             <td>{{ pesanan.jumlah }}</td>
@@ -56,10 +55,12 @@
                         </body>
                     </table>
                 </tr>
-                <tr>Total Koin: {{ detail.total }}</tr>
+                <tr><td>Total Koin: {{ total_koin }}</td></tr>
                 <br/>
+                <tr>
+                    <button class="btn btn-success"><a href="#">[AMBIL]</button>
+                </tr>
             </body>
         </table>
-        {% endif %}
     </center>
 {% endblock content %}

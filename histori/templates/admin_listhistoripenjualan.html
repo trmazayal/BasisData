@@ -6,7 +6,7 @@
 {% endblock title %}
 {% block meta%}
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-{% endblock meta%}
+{% endblock meta %}
 {% block content %}
     <center>
         <br/>
@@ -24,21 +24,21 @@
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <body>
+            <tbody>
             {% for penjualan in result %}
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ penjualan.email }}</td>
                 <td>{{ penjualan.waktu_penjualan }}</td>
                 <td>{{ penjualan.id_pesanan }}</td>
-                <td>{{ penjualan.koin }}</td>
+                <td>{{ total_koin }}</td>
                 <td>{{ penjualan.xp }}</td>
-                {% comment %} <td>
-                    <button type="submit" value="detail" href="{% 'histori:detail_histori_penjualan' penjualan.id_pesanan %}">[Detail]</button>
-                </td> {% endcomment %}
+                <td>
+                    <ul><a href="{% url 'histori:detail_histori_penjualan' penjualan.id_pesanan %}">[Detail]</ul>
+                </td>
             </tr>
             {% endfor %}
-            </body>
+            </tbody>
         </table>
         {% else %}
         <h3>Belum Ada Penjualan</h3>

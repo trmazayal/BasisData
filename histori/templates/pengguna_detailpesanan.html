@@ -10,12 +10,11 @@
 {% block content %}
     <center>
         <br/>
-        <h1><b>Detail Histori Penjualan Pesanan</b></h1>
+        <h1><b>Detail Pesanan</b></h1>
         <br/>
-        {% if result %}
         <table>
             <body>
-                {% for detail in result %}
+                {% for detail in result1 %}
                 <br/>
                 <tr>
                     <td>ID Pesanan: {{ detail.id }}</td>
@@ -29,8 +28,8 @@
                 <tr>
                     <td>Status Pesanan: {{ detail.status }}</td>
                 </tr>
-                {% endfor %}
                 <br/>
+                {% endfor %}
                 <tr>
                     <td>Detail Pesanan:</td>
                 </tr>
@@ -43,24 +42,23 @@
                                 <th scope="col">Subtotal</th>
                             </tr>
                         </thead>
-                        <body>
-                        {% for pesanan in result %}
+                        <tbody>
+                        {% for pesanan in result2 %}
                         <tr>
                             <td>{{ pesanan.prnama }}</td>
                             <td>{{ pesanan.jumlah }}</td>
                             <td>{{ pesanan.subtotal }}</td>
                         </tr>
                         {% endfor %}
-                        </body>
+                        </tbody>
                     </table>
                 </tr>
-                <tr>Total Koin: {{ detail.total }}</tr>
+                <tr>Total Koin: {{ total_koin }}</tr>
                 <br/>
                 <tr>
-                    <ul><a href="#">[AMBIL]</ul>
+                    <button class="btn btn-success"><a href="{% url 'histori:create_histori_penjualan' %}">[AMBIL]</button>
                 </tr>
             </body>
         </table>
-        {% endif %}
     </center>
 {% endblock content %}

@@ -12,21 +12,35 @@
         <h1>FORM PRODUKSI HEWAN</h1>
         <form action = "" method="POST", id="form">
             {% csrf_token %}
-            <label class="id_hewan">ID Hewan: </label>
-            <select name="id_hewan" id="id_hewan" required>
-                {% for data in result %}
-                <option value={{data.nama}}>{{data.nama}}</option>
-                {% endfor %}}
-            </select>
+            <div>
+                <label>ID Hewan: </label>
+                <select class="form-control" id="id_hewan" name="id_hewan_input"required>
+                    {% for data in result %}
+                        <option value={{data.id_hewan}}>{{data.id_hewan}}</option>
+                    {% endfor %}}
+                </select>
+            </div>
             <br/>
-            <label class="jumlah">Jumlah: </label>
-            <input type="number" class="form-control" id="jumlah" required>
-            <label class="matkul_day">XP: </label>
-            <input type="number" class="form-control" id="end_time_matkul" required disabled>
+            <div>
+                <label>Jumlah: </label>
+                <input type="number" class="form-control" id="jumlah" value="" onchange="total()" name="jumlah_input" required>
+            </div>
             <br/>
-            <input type="submit" value="Create">
+            <div>
+                <label>XP: </label>
+                <input type="number" class="form-control" id="xp" name="xp_input" required disabled>
+            </div>
             <br/>
-            <ul><a href="#">[PRODUKSI]</ul>
+            <input type="submit" class="btn btn-success" value="Produksi">
+            <br/>
         </form>
     </center>
+    <script type="text/javascript">
+        function total() {
+            var jumlah = document.getElementById('jumlah').value;
+            var xp = 5 * jumlah;
+            document.getElementById('xp').value = xp;
+            document.getElementById('xp').innerHTML = xp;
+        }
+    </script>
 {% endblock content %}

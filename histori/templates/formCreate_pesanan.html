@@ -14,16 +14,66 @@
         <form action = "" method="POST", id="form">
             {% csrf_token %}
             <label class="id_pesanan">ID Pesanan: </label>
-            <input type="text" class="form-control" id="pesanan_id" required disabled>
+            <input type="text" class="form-control" id="pesanan_id" name="input_idpesanan" value="{{ id }}" required disabled>
             <label class="nama_pesanan">Nama Pesanan: </label>
-            <input type="text" class="form-control" id="nama_pesanan" required>
+            <input type="text" class="form-control" id="nama_pesanan" name="input_namapesanan" required>
             <label class="jenis_pesanan">Jenis Pesanan: </label>
-            <input type="text" class="form-control" id="jenis_pesanan" required>
+            <input type="text" class="form-control" id="jenis_pesanan" name="input_jenispesanan" required>
             <label class="pesanan_detail">Detail Pesanan: </label>
             <br/>
-            <input type="submit" value="Create">
-            <br/>
-            <ul><a href="#">[BUAT]</ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Nama Produk</th>
+                        <th scope="col">Jumlah Produksi</th>
+                        <th scope="col">
+                            <button type="button" class="mybutton butwhite" onclick="addNew()">+</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="row_produk">
+                    <tr id="row1">
+                        <td>
+                            <select class="form-control" id="row1" name="row1">
+                                {%for row in nama_produk %}
+                                <option value="{{row.nama}}">{{row.nama}}</option>
+                                {% endfor %}
+                            </select>  
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" id="jumlah_pesanan" name="input_jumlahpesanan" required>
+                        </td>
+                        <td>
+                            <button type="button" class="mybutton butwhite" onclick="removeLastElem">X</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" class="btn btn-success" value="[BUAT]">
         </form>
     </center>
+    <script>
+        var sum=1;
+
+        function addNew() {
+            sum+=1;  
+            var produk_jumlah = '<tr id="row"'+sum+'">'+
+                        '<td> <select class="form-control" id="row'+sum+'" name="row'+sum+'"> {%for row in nama_produk %} <option value="{{row.nama}}">{{row.nama}}</option> {% endfor %} </select></td>'+
+                        '<td> <input type="number" class="form-control" id="jumlah_pesanan" name="input_jumlahpesanan" required> </td>'+ 
+                        '<td> <button type="button" class="mybutton butwhite" onclick="removeLastElem">X</button> </td>'
+                        '</tr>';
+            
+            var newContentBahan = document.createElement('div');
+            newContentBahan.innerHTML = produk_jumlah
+            document.getElementById('row_produk').appendChild(newContentBahan);
+        }
+
+
+        function removeLastElem() {
+            sum-=1;
+            document.getElementById('row_produk').lastChild.remove()
+            document.getElementById('row_produk').lastChild.remove()
+        }
+
+    </script>
 {% endblock content %}
