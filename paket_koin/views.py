@@ -34,12 +34,13 @@ def cekRole(email):
             return "Pengguna"
 
 def paket_koin(request):
+    cursor = connection.cursor()
+    cursor.execute("set search_path to public")
     try:
         email = request.session['email']
     except Exception as e:
         return redirect('/')
 
-    cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
     cursor.execute("""select jumlah_koin, harga,
                         case
@@ -69,11 +70,12 @@ def paket_koin(request):
 
 
 def transaksi_pembelian_koin(request):
+    cursor = connection.cursor()
+    cursor.execute("set search_path to public")
     try:
         email = request.session['email']
     except Exception as e:
         return redirect('/')
-    cursor = connection.cursor()
     cursor.execute("set search_path to hiday")
 
     role = cekRole(email)
@@ -109,11 +111,9 @@ def transaksi_pembelian_koin(request):
 
 def form_buat_paket_koin(request):
     if request.method =='POST':
-        input = get_input_paket_koin(request)
-        
         cursor = connection.cursor()
         cursor.execute("set search_path to hiday")
-
+        input = get_input_paket_koin(request)
         
         try :
             cursor.execute("insert into paket_koin values ('"+input[0]+"','"+input[1]+"')")
@@ -140,11 +140,11 @@ def delete_paket_koin(request, jumlah_koin):
     return redirect('/paket-koin/')
 
 def update_paket_koin(request): #form
+    cursor = connection.cursor()
+    cursor.execute("set search_path to hiday")
     jumlah_koin = request.POST['jumlah_koin']
     harga = request.POST['harga']
 
-    cursor = connection.cursor()
-    cursor.execute("set search_path to hiday")
     
     cursor.execute("update paket_koin set jumlah_koin = '" + jumlah_koin + "',  harga = '" +  harga + "' where jumlah_koin = '"+ jumlah_koin +"'")
 
@@ -167,7 +167,10 @@ def ubah_paket_koin(request, jumlah_koin):
     return render(request, "ubah_paket_koin.html", argument)
 
 def form_beli_paket_koin(request):
+    cursor = connection.cursor()
+    cursor.execute("set search_path to public")
     email = request.session['email']
+    cursor.execute("set search_path to hiday")
 
     if request.method =='POST':
         paket_koin_f = request.POST['paket_koin']
