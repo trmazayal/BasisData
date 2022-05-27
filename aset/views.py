@@ -17,7 +17,8 @@ def read_dekorasi(request):
     cursor.execute("set search_path to hiday")
     cursor.execute(f"""select *,
                     case
-	                    when not exists(select * from koleksi_aset_memiliki_aset kama where kama.id_aset = dekorasi.id_aset)
+	                    when not exists(select * from koleksi_aset_memiliki_aset kama where kama.id_aset = dekorasi.id_aset) and
+                        not exists(select * from dekorasi_memiliki_histori_penjualan dmhp where dmhp.id_dekorasi = dekorasi.id_aset)
                     then 1 else 0 end as can_delete
                     from aset left join dekorasi on dekorasi.id_aset = aset.id
                     """)
@@ -318,7 +319,6 @@ def create_kandang(request):
             cursor.close()
             return redirect('/aset/read/kandang/')
         except Exception as e:
-            print(e)
             message = "Data tidak berhasil dibuat"
 
     form = CreateKandangForm(initial={'id':id_kandang})
